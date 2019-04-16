@@ -1,0 +1,4 @@
+DROP TABLE mark;
+DROP TABLE comment;
+DROP TABLE film;
+DROP TABLE user;

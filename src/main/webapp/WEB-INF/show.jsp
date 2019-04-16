@@ -1,0 +1,63 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8"  %>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
+    <meta charset="UTF-8"/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+    <title>${requestScope.film.title}</title>
+</head>
+<body>
+<jsp:include page="templates/header.jsp"/>
+<div class="wrapper">
+    <div class="pane-wrapper">
+        <jsp:include page="templates/left_panel.jsp"/>
+        <div class="film-wrapper content-panel">
+            <div class="film-panel pane">
+                <jsp:include page="templates/film_preview.jsp">
+                    <jsp:param name="isMoreNeeded" value="false"/>
+                </jsp:include>
+                <div class="rating">
+                    <p class="service">Your rating: <span class="rating-value service">
+                        ${empty requestScope.userMark ? 1 : requestScope.userMark.value}
+                    </span>
+                    </p>
+                    <form action="${pageContext.request.contextPath}/" method="post">
+                        <input type="hidden" name="film_id" value="${requestScope.film.id}" />
+                        <c:choose>
+                            <c:when test="${empty requestScope.userMark}">
+                                <input type="hidden" name="command" value="add_mark" />
+                                <input type="range" min="1" max="10" value="1" class="slider" name="value" />
+                                <br>
+                                <button id="vote-button" class="service">Vote</button>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="hidden" name="command" value="remove_mark" />
+                                <input type="range" min="1" name="value" max="10" value="${requestScope.userMark.value}" class="slider disabled-slider disabled" disabled>
+                                <br>
+                                <button id="remove-mark-button" class="service">Remove my mark</button>
+                            </c:otherwise>
+                        </c:choose>
+                    </form>
+                </div>
+                <form action="${pageContext.request.contextPath}/" method="post" class="new-comment">
+                    <input type="hidden" name="command" value="add_comment"/>
+                    <input type="hidden" name="film_id" value="${requestScope.film.id}"/>
+                    <p class="service">Share your opinion</p>
+                    <textarea name="text" class="content-textarea"></textarea>
+                    <br>
+                    <button class="service">Submit</button>
+                </form>
+                <div class="comments">
+                    <jsp:include page="templates/comments.jsp"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<jsp:include page="templates/footer.jsp"/>
+
+<script src="${pageContext.request.contextPath}/js/slider.js"></script>
+</body>
+</html>

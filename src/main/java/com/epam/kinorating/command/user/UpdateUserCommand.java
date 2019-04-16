@@ -4,9 +4,7 @@ import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.model.entity.Role;
-import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.service.UserService;
-import com.mysql.cj.xdevapi.SessionFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +18,6 @@ public class UpdateUserCommand implements Command {
     private static final String BAN_PARAMETER = "ban";
     private static final String BAN_FLAG = "on";
     private static final String REFERER = "Referer";
-    private static final String INDEX_PAGE = "/";
     private final UserService userService;
 
     public UpdateUserCommand(UserService userService) {

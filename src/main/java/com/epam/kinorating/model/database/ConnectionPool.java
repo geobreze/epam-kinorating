@@ -2,21 +2,20 @@ package com.epam.kinorating.model.database;
 
 import com.epam.kinorating.exception.ConnectionPoolException;
 import com.epam.kinorating.factory.ConnectionFactory;
-import jdk.nashorn.internal.ir.Block;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.concurrent.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final int POOL_SIZE = 5;
-    private BlockingQueue<Connection> connections;
     private static final ConnectionPool instance = new ConnectionPool();
+    private BlockingQueue<Connection> connections;
 
     private ConnectionPool() {
         LOGGER.info("Creating connection pool");
@@ -35,12 +34,12 @@ public class ConnectionPool {
             throw new ConnectionPoolException("JDBC driver is not found", e);
         }
         try {
-            for(int i = 0; i < POOL_SIZE; ++i) {
+            for (int i = 0; i < POOL_SIZE; ++i) {
                 Connection connection = ConnectionFactory.create();
                 connections.add(connection);
             }
         } catch (SQLException e) {
-            throw new ConnectionPoolException("Couldn't create connection",e);
+            throw new ConnectionPoolException("Couldn't create connection", e);
         }
     }
 

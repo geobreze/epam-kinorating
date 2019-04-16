@@ -2,15 +2,14 @@ package com.epam.kinorating.model.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 public class Film extends Entity implements Serializable {
     public static final String NAME = "film";
 
     private final String title;
     private final String description;
-    private List<Comment> comments;
     private final double mark;
+    private List<Comment> comments;
 
     public Film(Integer id, String title, String description, double mark) {
         super(id);

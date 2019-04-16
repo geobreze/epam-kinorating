@@ -2,8 +2,6 @@ package com.epam.kinorating.filter;
 
 import javax.servlet.*;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Optional;
 
 public class EncodingFilter implements Filter {
     private static final String ENCODING_PARAM = "encoding";
@@ -18,7 +16,7 @@ public class EncodingFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String requestEncoding = servletRequest.getCharacterEncoding();
 
-        if(encoding != null && !encoding.equalsIgnoreCase(requestEncoding)) {
+        if (encoding != null && !encoding.equalsIgnoreCase(requestEncoding)) {
             servletRequest.setCharacterEncoding(encoding);
             servletResponse.setCharacterEncoding(encoding);
         }

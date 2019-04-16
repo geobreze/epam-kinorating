@@ -1,11 +1,8 @@
 package com.epam.kinorating.command;
 
 import com.epam.kinorating.exception.ServiceException;
-import com.epam.kinorating.model.database.ConnectionPool;
 import com.epam.kinorating.model.entity.Language;
 import com.epam.kinorating.parser.Parser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

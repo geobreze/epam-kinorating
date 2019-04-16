@@ -5,7 +5,6 @@ import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.service.UserService;
-import com.mysql.cj.xdevapi.SessionFactory;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,16 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.Properties;
 
 public class LogInCommand implements Command {
     public static final String NAME = "login";
 
-    private static final Logger LOGGER = LogManager.getLogger(LogInCommand.class);
-    private static final String INDEX_PAGE = "/";
-    private static final String USER_ATTRIBUTE = "user";
     private static final String LOGIN_PARAMETER = "login";
-    private static final String PASSWORD_PARAMETER  = "password";
+    private static final String PASSWORD_PARAMETER = "password";
     private static final String ERROR_ATTRIBUTE = "error";
     private static final String INVALID_LOGIN_OR_PASSWORD = "Invalid login or password";
     private final UserService userService;
@@ -44,7 +39,7 @@ public class LogInCommand implements Command {
 
         CommandResult commandResult;
         HttpSession session = request.getSession();
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             session.setAttribute(User.NAME, user.get());
             commandResult = new CommandResult(request.getContextPath(), false);
         } else {

@@ -8,12 +8,10 @@ import com.epam.kinorating.model.entity.builder.Builder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.plaf.nimbus.State;
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,7 +71,7 @@ public abstract class AbstractDao<T extends Entity> implements DataAccessObject<
     protected Optional<T> executeQueryForSingleResult(String query, Builder<T> builder, Object... params) throws DaoException {
         List<T> itemsList = executeQuery(query, builder, params);
         Optional<T> result;
-        if(itemsList.size() == 1) {
+        if (itemsList.size() == 1) {
             T firstItem = itemsList.get(0);
             result = Optional.of(firstItem);
         } else {

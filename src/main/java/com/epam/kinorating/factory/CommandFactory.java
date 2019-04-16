@@ -1,15 +1,22 @@
 package com.epam.kinorating.factory;
 
-import com.epam.kinorating.command.*;
-import com.epam.kinorating.command.comment.*;
+import com.epam.kinorating.command.ChangeLanguageCommand;
+import com.epam.kinorating.command.Command;
+import com.epam.kinorating.command.IndexCommand;
+import com.epam.kinorating.command.comment.AddCommentCommand;
+import com.epam.kinorating.command.comment.DeleteCommentCommand;
 import com.epam.kinorating.command.film.*;
-import com.epam.kinorating.command.mark.*;
+import com.epam.kinorating.command.mark.AddMarkCommand;
+import com.epam.kinorating.command.mark.RemoveMarkCommand;
 import com.epam.kinorating.command.user.*;
 import com.epam.kinorating.exception.ConnectionPoolException;
 import com.epam.kinorating.model.entity.*;
 import com.epam.kinorating.parser.LanguageParser;
 import com.epam.kinorating.parser.Parser;
-import com.epam.kinorating.service.*;
+import com.epam.kinorating.service.CommentService;
+import com.epam.kinorating.service.FilmService;
+import com.epam.kinorating.service.MarkService;
+import com.epam.kinorating.service.UserService;
 import org.apache.http.client.utils.URIBuilder;
 
 public class CommandFactory {
@@ -59,8 +66,7 @@ public class CommandFactory {
             }
             case RemoveMarkCommand.NAME: {
                 MarkService markService = (MarkService) ServiceFactory.create(Mark.NAME);
-                URIBuilder uriBuilder = new URIBuilder();
-                commandObject = new RemoveMarkCommand(markService, uriBuilder);
+                commandObject = new RemoveMarkCommand(markService);
                 break;
             }
             case ShowAddPanelCommand.NAME: {

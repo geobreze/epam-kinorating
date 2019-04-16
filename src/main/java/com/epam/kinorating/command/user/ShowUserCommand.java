@@ -6,7 +6,6 @@ import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.model.entity.Role;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.service.UserService;
-import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

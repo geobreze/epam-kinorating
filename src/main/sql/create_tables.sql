@@ -3,8 +3,8 @@ CREATE TABLE user
   id       INTEGER     NOT NULL AUTO_INCREMENT PRIMARY KEY,
   login    VARCHAR(20) NOT NULL UNIQUE,
   password CHAR(32)    NOT NULL,
-  role     ENUM('ADMIN', 'USER') DEFAULT 'USER',
-  ban      TINYINT DEFAULT 0
+  role     ENUM ('ADMIN', 'USER') DEFAULT 'USER',
+  ban      TINYINT                DEFAULT 0
 );
 
 CREATE TABLE film
@@ -28,10 +28,10 @@ CREATE TABLE mark
 
 CREATE TABLE comment
 (
-  id      INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  user_id INTEGER NOT NULL,
-  film_id INTEGER NOT NULL,
-  text    TEXT    NOT NULL,
+  id          INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id     INTEGER NOT NULL,
+  film_id     INTEGER NOT NULL,
+  text        TEXT    NOT NULL,
   CONSTRAINT comment_foreign_key_film_id FOREIGN KEY (film_id) REFERENCES film (id) ON DELETE CASCADE,
   CONSTRAINT comment_foreign_key_user_id FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
   last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

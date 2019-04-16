@@ -5,7 +5,6 @@ import com.epam.kinorating.model.entity.Role;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.model.entity.builder.UserBuilder;
 
-import java.io.Closeable;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;

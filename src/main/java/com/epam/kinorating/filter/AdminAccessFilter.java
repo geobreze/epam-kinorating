@@ -36,7 +36,7 @@ public class AdminAccessFilter implements Filter {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(User.NAME);
         String command = request.getParameter(Command.NAME);
-        if(adminCommands.contains(command) && !user.getRole().equals(adminRole)) {
+        if (adminCommands.contains(command) && !user.getRole().equals(adminRole)) {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.sendRedirect(request.getContextPath());
         } else {

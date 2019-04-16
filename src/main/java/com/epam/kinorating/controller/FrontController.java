@@ -2,9 +2,9 @@ package com.epam.kinorating.controller;
 
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
-import com.epam.kinorating.factory.CommandFactory;
 import com.epam.kinorating.exception.ConnectionPoolException;
 import com.epam.kinorating.exception.ServiceException;
+import com.epam.kinorating.factory.CommandFactory;
 import com.epam.kinorating.model.database.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +18,6 @@ import java.io.IOException;
 
 public class FrontController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(FrontController.class);
-    private static final String COMMAND_PARAMETER = "command";
 
     @Override
     public void init() {
@@ -42,13 +41,13 @@ public class FrontController extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String commandString  = request.getParameter(COMMAND_PARAMETER);
+        String commandString = request.getParameter(Command.NAME);
         LOGGER.info("{} command supplied", commandString);
         try (Command command = CommandFactory.create(commandString)) {
             CommandResult forwardPath = command.execute(request, response);
             command.close();
             String forwardUrl = forwardPath.getUrl();
-            if(forwardPath.isForward()) {
+            if (forwardPath.isForward()) {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(forwardUrl);
                 requestDispatcher.forward(request, response);
             } else {

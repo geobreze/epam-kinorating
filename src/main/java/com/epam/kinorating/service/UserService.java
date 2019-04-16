@@ -6,7 +6,6 @@ import com.epam.kinorating.model.database.dao.UserDao;
 import com.epam.kinorating.model.entity.Role;
 import com.epam.kinorating.model.entity.User;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -30,14 +29,6 @@ public class UserService implements Service<User> {
         try {
             Optional<User> user = userDao.findById(id);
             return user.orElseThrow(ServiceException::new);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public void updateUser(Integer id, User user) throws ServiceException {
-        try {
-            userDao.update(id, user);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -2,12 +2,10 @@ package com.epam.kinorating.command.mark;
 
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
-import com.epam.kinorating.command.film.ShowFilmCommand;
 import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.model.entity.Mark;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.service.MarkService;
-import org.apache.http.client.utils.URIBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,12 +15,8 @@ import java.io.IOException;
 public class AddMarkCommand implements Command {
     public static final String NAME = "add_mark";
 
-    private static final String USER_ATTRIBUTE = "user";
     private static final String FILM_ID_ATTRIBUTE = "film_id";
     private static final String VALUE_ATTRIBUTE = "value";
-    private static final String COMMAND_LABEL = "command";
-    private static final String SHOW_COMMAND = "show";
-    private static final String ID_ATTRIBUTE = "id";
     private static final String REFERER = "Referer";
     private final MarkService markService;
 

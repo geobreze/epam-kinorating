@@ -2,10 +2,8 @@ package com.epam.kinorating.command.comment;
 
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
-import com.epam.kinorating.command.film.ShowFilmCommand;
 import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.service.CommentService;
-import org.apache.http.client.utils.URIBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

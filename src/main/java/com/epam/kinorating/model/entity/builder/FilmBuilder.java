@@ -1,8 +1,6 @@
 package com.epam.kinorating.model.entity.builder;
 
 import com.epam.kinorating.model.entity.Film;
-import com.epam.kinorating.model.entity.Role;
-import com.epam.kinorating.model.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

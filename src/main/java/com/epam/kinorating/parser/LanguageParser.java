@@ -7,8 +7,8 @@ public class LanguageParser implements Parser<Language> {
 
     @Override
     public Language parse(String value) {
-        for(Language language : Language.values()) {
-            if(language.name().equals(value)) {
+        for (Language language : Language.values()) {
+            if (language.name().equals(value)) {
                 return Language.valueOf(value);
             }
         }

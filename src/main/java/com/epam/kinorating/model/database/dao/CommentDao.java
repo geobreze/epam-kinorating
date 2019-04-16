@@ -2,13 +2,10 @@ package com.epam.kinorating.model.database.dao;
 
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.model.entity.Comment;
-import com.epam.kinorating.model.entity.Film;
-import com.epam.kinorating.model.entity.Mark;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.model.entity.builder.CommentBuilder;
 import com.epam.kinorating.model.entity.builder.UserBuilder;
 
-import java.io.Closeable;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;

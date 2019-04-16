@@ -9,11 +9,9 @@ import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.service.FilmService;
 import com.epam.kinorating.service.MarkService;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -22,8 +20,6 @@ public class ShowFilmCommand implements Command {
 
     private static final String SHOW_PAGE = "WEB-INF/show.jsp";
     private static final String ID_ATTRIBUTE = "id";
-    private static final String FILM_ATTRIBUTE = "film";
-    private static final String USER_ATTRIBUTE = "user";
     private static final String USER_MARK = "userMark";
     private final FilmService filmService;
     private final MarkService markService;

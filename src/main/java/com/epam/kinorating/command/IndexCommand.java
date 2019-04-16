@@ -23,7 +23,7 @@ public class IndexCommand implements Command {
         HttpSession session = request.getSession();
         Object user = session.getAttribute(USER_ATTRIBUTE);
         CommandResult forwardPath;
-        if(user == null) {
+        if (user == null) {
             forwardPath = new CommandResult(LOGIN_PAGE, true);
         } else {
             forwardPath = forwardCommand.execute(request, response);

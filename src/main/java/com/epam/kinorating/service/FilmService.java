@@ -6,7 +6,6 @@ import com.epam.kinorating.model.database.dao.FilmDao;
 import com.epam.kinorating.model.entity.Comment;
 import com.epam.kinorating.model.entity.Film;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;

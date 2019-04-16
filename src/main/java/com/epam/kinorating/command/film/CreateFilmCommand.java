@@ -15,7 +15,6 @@ public class CreateFilmCommand implements Command {
 
     private static final String TITLE_ATTRIBUTE = "title";
     private static final String DESCRIPTION_ATTRIBUTE = "description";
-    private static final String INDEX_PAGE = "/";
     private final FilmService filmService;
 
     public CreateFilmCommand(FilmService filmService) {

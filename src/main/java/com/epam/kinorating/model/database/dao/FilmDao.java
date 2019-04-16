@@ -4,7 +4,6 @@ import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.model.entity.Film;
 import com.epam.kinorating.model.entity.builder.FilmBuilder;
 
-import java.io.Closeable;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +21,7 @@ public class FilmDao extends AbstractDao<Film> {
 
     @Override
     public List<Film> findAll() throws DaoException {
-        return executeQuery(FIND_ALL_QUERY, new FilmBuilder(),MINIMUM_MARK_COUNT_BORDER);
+        return executeQuery(FIND_ALL_QUERY, new FilmBuilder(), MINIMUM_MARK_COUNT_BORDER);
     }
 
     @Override

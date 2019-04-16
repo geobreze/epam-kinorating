@@ -11,8 +11,6 @@ import java.io.IOException;
 public class LogOutCommand implements Command {
     public static final String NAME = "logout";
 
-    private static final String INDEX_PAGE = "/";
-
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();

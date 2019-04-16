@@ -21,7 +21,7 @@ public class DefaultLocaleFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
         Object locale = session.getAttribute(LANGUAGE_ATTRIBUTE);
-        if(locale == null) {
+        if (locale == null) {
             session.setAttribute(LANGUAGE_ATTRIBUTE, defaultLanguage);
         }
         filterChain.doFilter(servletRequest, servletResponse);

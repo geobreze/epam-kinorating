@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8" %>
 
-<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale"/>
 
 <!DOCTYPE html>
@@ -37,14 +37,16 @@
                                 <input type="hidden" name="command" value="add_mark"/>
                                 <input type="range" min="1" max="10" value="1" class="slider" name="value"/>
                                 <br>
-                                <button id="vote-button" class="service"><fmt:message key="film.show.button.vote"/> </button>
+                                <button id="vote-button" class="service"><fmt:message
+                                        key="film.show.button.vote"/></button>
                             </c:when>
                             <c:otherwise>
                                 <input type="hidden" name="command" value="remove_mark"/>
                                 <input type="range" min="1" name="value" max="10" value="${requestScope.userMark.value}"
                                        class="slider disabled-slider disabled" disabled>
                                 <br>
-                                <button id="remove-mark-button" class="service"><fmt:message key="film.show.button.unvote"/></button>
+                                <button id="remove-mark-button" class="service"><fmt:message
+                                        key="film.show.button.unvote"/></button>
                             </c:otherwise>
                         </c:choose>
                     </form>
@@ -52,10 +54,10 @@
                 <form action="${pageContext.request.contextPath}/" method="post" class="new-comment">
                     <input type="hidden" name="command" value="add_comment"/>
                     <input type="hidden" name="film_id" value="${requestScope.film.id}"/>
-                    <p class="service"><fmt:message key="film.show.label.share"/> </p>
+                    <p class="service"><fmt:message key="film.show.label.share"/></p>
                     <textarea name="text" class="content-textarea"></textarea>
                     <br>
-                    <button class="service"><fmt:message key="button.submit" /> </button>
+                    <button class="service"><fmt:message key="button.submit"/></button>
                 </form>
                 <div class="comments">
                     <jsp:include page="templates/comments.jsp"/>

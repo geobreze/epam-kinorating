@@ -7,10 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CommentBuilder implements Builder<Comment> {
-    private final Builder<User> userBuilder;
     private static final String ID_LABEL = "comment_id";
     private static final String FILM_ID_LABEL = "film_id";
     private static final String TEXT_LABEL = "text";
+    private final Builder<User> userBuilder;
 
     public CommentBuilder(Builder<User> userBuilder) {
         this.userBuilder = userBuilder;

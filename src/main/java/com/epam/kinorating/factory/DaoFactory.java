@@ -3,7 +3,10 @@ package com.epam.kinorating.factory;
 import com.epam.kinorating.exception.ConnectionPoolException;
 import com.epam.kinorating.model.database.ConnectionPool;
 import com.epam.kinorating.model.database.dao.*;
-import com.epam.kinorating.model.entity.*;
+import com.epam.kinorating.model.entity.Comment;
+import com.epam.kinorating.model.entity.Film;
+import com.epam.kinorating.model.entity.Mark;
+import com.epam.kinorating.model.entity.User;
 
 import java.sql.Connection;
 
@@ -14,10 +17,10 @@ public class DaoFactory {
         DataAccessObject dataAccessObject;
         switch (daoName) {
             case User.NAME: {
-                dataAccessObject =  new UserDao(connection);
+                dataAccessObject = new UserDao(connection);
                 break;
             }
-            case Comment.NAME:{
+            case Comment.NAME: {
                 dataAccessObject = new CommentDao(connection);
                 break;
             }

@@ -1,5 +1,5 @@
 package com.epam.kinorating.model.entity;
 
-public enum  Language {
+public enum Language {
     EN, RU
 }

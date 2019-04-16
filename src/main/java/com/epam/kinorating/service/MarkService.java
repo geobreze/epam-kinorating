@@ -5,7 +5,6 @@ import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.model.database.dao.MarkDao;
 import com.epam.kinorating.model.entity.Mark;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.Optional;
 

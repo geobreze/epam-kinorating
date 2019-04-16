@@ -29,12 +29,26 @@
     </filter-mapping>
 
     <filter>
+        <filter-name>defaultLocaleFilter</filter-name>
+        <filter-class>com.epam.kinorating.filter.DefaultLocaleFilter</filter-class>
+        <init-param>
+            <param-name>defaultLanguage</param-name>
+            <param-value>en</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>defaultLocaleFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <filter>
         <filter-name>unregisteredUserFilter</filter-name>
         <filter-class>com.epam.kinorating.filter.UnregisteredUserFilter</filter-class>
         <init-param>
             <param-name>ignoredCommands</param-name>
             <param-value>
-                index,login
+                index,login,change_language
             </param-value>
         </init-param>
     </filter>
@@ -55,15 +69,13 @@
         <init-param>
             <param-name>ignoredCommands</param-name>
             <param-value>
-                logout
+                logout,change_language
             </param-value>
         </init-param>
     </filter>
     <filter-mapping>
         <filter-name>bannedUserFilter</filter-name>
         <url-pattern>/*</url-pattern>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 
     <filter>

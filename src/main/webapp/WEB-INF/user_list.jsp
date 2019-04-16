@@ -1,5 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8"  %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="locale"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,12 +20,12 @@
         <jsp:include page="templates/left_panel.jsp"/>
         <div class="edit-panel content-panel pane">
             <table class="user-table">
-                <caption class="service">User list</caption>
+                <caption class="service"><fmt:message key="user.list.table.caption" /> </caption>
                 <thead>
                 <tr>
-                    <th class="service">Login</th>
-                    <th class="service">Role</th>
-                    <th class="service">Ban status</th>
+                    <th class="service"><fmt:message key="user.list.table.header.login"/></th>
+                    <th class="service"><fmt:message key="user.list.table.header.role"/></th>
+                    <th class="service"><fmt:message key="user.list.table.header.banstatus"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,10 +38,10 @@
                             ${user.role}
                         </td>
                         <td>
-                            ${user.ban ? "Banned" : "Not banned"}
+                            <fmt:message key="status.${user.ban ? 'banned' : 'notbanned'}" />
                         </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}?command=show_user&id=${user.id}">Go to user page</a>
+                            <a href="${pageContext.request.contextPath}?command=show_user&id=${user.id}"><fmt:message key="user.list.table.userpage"/></a>
                         </td>
                     </tr>
                 </c:forEach>

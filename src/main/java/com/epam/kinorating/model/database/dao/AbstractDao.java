@@ -20,24 +20,10 @@ import java.util.Optional;
 
 public abstract class AbstractDao<T extends Entity> implements DataAccessObject<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
-    private static final String LAST_INSERT_ID_LABEL = "last_insert_id";
-    private static final String LAST_INSERT_ID_QUERY = "SELECT LAST_INSERT_ID() AS last_insert_id";
     private final Connection connection;
 
     public AbstractDao(Connection connection) {
         this.connection = connection;
-    }
-
-    @Override
-    public int getLastInsertId() throws DaoException {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet =  statement.executeQuery(LAST_INSERT_ID_QUERY);
-            resultSet.next();
-            return resultSet.getInt(LAST_INSERT_ID_LABEL);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
     }
 
     protected void executeUpdate(String query, Object... params) throws DaoException {

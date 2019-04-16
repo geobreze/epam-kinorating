@@ -1,5 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8"  %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8" %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="locale"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +14,7 @@
     <title>${requestScope.film.title}</title>
 </head>
 <body>
+<c:set var="rating" scope="page" value="${empty requestScope.userMark ? 1 : requestScope.userMark.value}"/>
 <jsp:include page="templates/header.jsp"/>
 <div class="wrapper">
     <div class="pane-wrapper">
@@ -19,24 +25,26 @@
                     <jsp:param name="isMoreNeeded" value="false"/>
                 </jsp:include>
                 <div class="rating">
-                    <p class="service">Your rating: <span class="rating-value service">
-                        ${empty requestScope.userMark ? 1 : requestScope.userMark.value}
-                    </span>
+                    <p class="service"><fmt:message key="film.show.label.rating"/>:
+                        <span class="rating-value service">
+                            ${rating}
+                        </span>
                     </p>
                     <form action="${pageContext.request.contextPath}/" method="post">
-                        <input type="hidden" name="film_id" value="${requestScope.film.id}" />
+                        <input type="hidden" name="film_id" value="${requestScope.film.id}"/>
                         <c:choose>
                             <c:when test="${empty requestScope.userMark}">
-                                <input type="hidden" name="command" value="add_mark" />
-                                <input type="range" min="1" max="10" value="1" class="slider" name="value" />
+                                <input type="hidden" name="command" value="add_mark"/>
+                                <input type="range" min="1" max="10" value="1" class="slider" name="value"/>
                                 <br>
-                                <button id="vote-button" class="service">Vote</button>
+                                <button id="vote-button" class="service"><fmt:message key="film.show.button.vote"/> </button>
                             </c:when>
                             <c:otherwise>
-                                <input type="hidden" name="command" value="remove_mark" />
-                                <input type="range" min="1" name="value" max="10" value="${requestScope.userMark.value}" class="slider disabled-slider disabled" disabled>
+                                <input type="hidden" name="command" value="remove_mark"/>
+                                <input type="range" min="1" name="value" max="10" value="${requestScope.userMark.value}"
+                                       class="slider disabled-slider disabled" disabled>
                                 <br>
-                                <button id="remove-mark-button" class="service">Remove my mark</button>
+                                <button id="remove-mark-button" class="service"><fmt:message key="film.show.button.unvote"/></button>
                             </c:otherwise>
                         </c:choose>
                     </form>
@@ -44,10 +52,10 @@
                 <form action="${pageContext.request.contextPath}/" method="post" class="new-comment">
                     <input type="hidden" name="command" value="add_comment"/>
                     <input type="hidden" name="film_id" value="${requestScope.film.id}"/>
-                    <p class="service">Share your opinion</p>
+                    <p class="service"><fmt:message key="film.show.label.share"/> </p>
                     <textarea name="text" class="content-textarea"></textarea>
                     <br>
-                    <button class="service">Submit</button>
+                    <button class="service"><fmt:message key="button.submit" /> </button>
                 </form>
                 <div class="comments">
                     <jsp:include page="templates/comments.jsp"/>

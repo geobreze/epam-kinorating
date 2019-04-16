@@ -7,6 +7,8 @@ import com.epam.kinorating.command.mark.*;
 import com.epam.kinorating.command.user.*;
 import com.epam.kinorating.exception.ConnectionPoolException;
 import com.epam.kinorating.model.entity.*;
+import com.epam.kinorating.parser.LanguageParser;
+import com.epam.kinorating.parser.Parser;
 import com.epam.kinorating.service.*;
 import org.apache.http.client.utils.URIBuilder;
 
@@ -99,6 +101,11 @@ public class CommandFactory {
             case ShowUserCommand.NAME: {
                 UserService userService = (UserService) ServiceFactory.create(User.NAME);
                 commandObject = new ShowUserCommand(userService);
+                break;
+            }
+            case ChangeLanguageCommand.NAME: {
+                Parser<Language> languageParser = new LanguageParser();
+                commandObject = new ChangeLanguageCommand(languageParser);
                 break;
             }
             default: {

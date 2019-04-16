@@ -32,7 +32,7 @@ public class ConnectionPool {
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
-            throw new ConnectionPoolException(e);
+            throw new ConnectionPoolException("JDBC driver is not found", e);
         }
         try {
             for(int i = 0; i < POOL_SIZE; ++i) {
@@ -40,7 +40,7 @@ public class ConnectionPool {
                 connections.add(connection);
             }
         } catch (SQLException e) {
-            throw new ConnectionPoolException(e);
+            throw new ConnectionPoolException("Couldn't create connection",e);
         }
     }
 
@@ -48,7 +48,7 @@ public class ConnectionPool {
         try {
             return connections.take();
         } catch (InterruptedException e) {
-            throw new ConnectionPoolException(e);
+            throw new ConnectionPoolException("Couldn't get connection from pool", e);
         }
     }
 

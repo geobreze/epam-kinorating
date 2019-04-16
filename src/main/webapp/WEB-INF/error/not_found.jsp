@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8"  %>
 <!DOCTYPE html>
 <html>
@@ -13,9 +14,9 @@
 <div class="wrapper">
     <div class="log-in-wrapper pane-wrapper">
         <div class="error-wrapper pane service">
-            Sorry, but you were banned
+            <fmt:message key="notfound.message" />
             <form action="${pageContext.request.contextPath}/">
-                <button class="service">Index page</button>
+                <button class="service"><fmt:message key="button.index" /></button>
             </form>
         </div>
     </div>

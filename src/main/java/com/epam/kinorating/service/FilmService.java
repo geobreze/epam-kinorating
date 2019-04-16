@@ -63,10 +63,9 @@ public class FilmService implements Service<Film> {
         }
     }
 
-    public int addNewFilm(Film film) throws ServiceException {
+    public void addNewFilm(Film film) throws ServiceException {
         try {
             filmDao.save(film);
-            return filmDao.getLastInsertId();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

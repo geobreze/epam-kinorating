@@ -13,5 +13,4 @@ public interface DataAccessObject<T extends Entity> extends Closeable, AutoClose
     void save(T entity) throws DaoException;
     void removeById(Integer id) throws DaoException;
     void update(Integer id, T entity) throws DaoException;
-    int getLastInsertId() throws DaoException;
 }

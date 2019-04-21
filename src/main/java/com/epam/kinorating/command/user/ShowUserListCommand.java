@@ -15,7 +15,7 @@ public class ShowUserListCommand implements Command {
     public static final String NAME = "show_users";
 
     private static final String USERS_ATTRIBUTE = "users";
-    private static final String SHOW_USERS_PAGE = "WEB-INF/user_list.jsp";
+    private static final String SHOW_USERS_PAGE = "/WEB-INF/user_list.jsp";
     private final UserService userService;
 
     public ShowUserListCommand(UserService userService) {
@@ -27,10 +27,5 @@ public class ShowUserListCommand implements Command {
         List<User> users = userService.getAll();
         request.setAttribute(USERS_ATTRIBUTE, users);
         return new CommandResult(SHOW_USERS_PAGE, true);
-    }
-
-    @Override
-    public void close() throws IOException {
-        userService.close();
     }
 }

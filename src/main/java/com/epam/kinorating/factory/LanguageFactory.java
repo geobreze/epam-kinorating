@@ -3,6 +3,8 @@ package com.epam.kinorating.parser;
 import com.epam.kinorating.model.entity.Language;
 
 public class LanguageParser implements Parser<Language> {
+    //TODO move to factory
+
     private static final Language DEFAULT_LANGUAGE = Language.EN;
 
     @Override

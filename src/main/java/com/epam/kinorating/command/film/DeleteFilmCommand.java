@@ -27,9 +27,4 @@ public class DeleteFilmCommand implements Command {
 
         return new CommandResult(request.getContextPath(), false);
     }
-
-    @Override
-    public void close() throws IOException {
-        filmService.close();
-    }
 }

@@ -1,8 +1,8 @@
 package com.epam.kinorating.command;
 
 import com.epam.kinorating.exception.ServiceException;
+import com.epam.kinorating.factory.LanguageFactory;
 import com.epam.kinorating.model.entity.Language;
-import com.epam.kinorating.parser.Parser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,24 +14,19 @@ public class ChangeLanguageCommand implements Command {
 
     private static final String LANGUAGE_ATTRIBUTE = "language";
     private static final String REFERER = "Referer";
-    private final Parser<Language> languageParser;
+    private final LanguageFactory languageFactory;
 
-    public ChangeLanguageCommand(Parser<Language> languageParser) {
-        this.languageParser = languageParser;
+    public ChangeLanguageCommand(LanguageFactory languageFactory) {
+        this.languageFactory = languageFactory;
     }
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         String languageString = request.getParameter(LANGUAGE_ATTRIBUTE);
-        Language language = languageParser.parse(languageString);
+        Language language = languageFactory.getLanguage(languageString);
         HttpSession session = request.getSession();
         session.setAttribute(LANGUAGE_ATTRIBUTE, language.name().toLowerCase());
         String referer = request.getHeader(REFERER);
         return new CommandResult(referer, false);
-    }
-
-    @Override
-    public void close() throws IOException {
-
     }
 }

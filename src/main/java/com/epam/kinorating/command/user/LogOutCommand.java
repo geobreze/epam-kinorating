@@ -17,9 +17,4 @@ public class LogOutCommand implements Command {
         session.invalidate();
         return new CommandResult(request.getContextPath(), false);
     }
-
-    @Override
-    public void close() throws IOException {
-
-    }
 }

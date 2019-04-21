@@ -21,7 +21,7 @@ public class LogInCommand implements Command {
     private static final String LOGIN_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
     private static final String ERROR_ATTRIBUTE = "error";
-    private static final String INVALID_LOGIN_OR_PASSWORD = "Invalid login or password";
+    private static final String INVALID_LOGIN_OR_PASSWORD = "1";
     private final UserService userService;
     private final URIBuilder uriBuilder;
 
@@ -45,14 +45,9 @@ public class LogInCommand implements Command {
         } else {
             uriBuilder.setPath(request.getContextPath());
             uriBuilder.addParameter(LOGIN_PARAMETER, login);
-            uriBuilder.addParameter(ERROR_ATTRIBUTE, INVALID_LOGIN_OR_PASSWORD); // TODO: replace with error codes
+            uriBuilder.addParameter(ERROR_ATTRIBUTE, INVALID_LOGIN_OR_PASSWORD);
             commandResult = new CommandResult(uriBuilder.toString(), false);
         }
         return commandResult;
-    }
-
-    @Override
-    public void close() throws IOException {
-        userService.close();
     }
 }

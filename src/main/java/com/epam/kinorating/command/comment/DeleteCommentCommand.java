@@ -29,9 +29,4 @@ public class DeleteCommentCommand implements Command {
         String referer = request.getHeader(REFERER);
         return new CommandResult(referer, false);
     }
-
-    @Override
-    public void close() throws IOException {
-        commentService.close();
-    }
 }

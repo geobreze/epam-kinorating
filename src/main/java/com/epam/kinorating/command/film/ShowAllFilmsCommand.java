@@ -14,7 +14,7 @@ import java.util.List;
 public class ShowAllFilmsCommand implements Command {
     public static final String NAME = "show_all";
 
-    private static final String PANEL_PAGE = "WEB-INF/panel.jsp";
+    private static final String PANEL_PAGE = "/WEB-INF/panel.jsp";
     private static final String FILMS_ATTRIBUTE = "films";
     private final FilmService filmService;
 
@@ -27,10 +27,5 @@ public class ShowAllFilmsCommand implements Command {
         List<Film> films = filmService.findAll();
         request.setAttribute(FILMS_ATTRIBUTE, films);
         return new CommandResult(PANEL_PAGE, true);
-    }
-
-    @Override
-    public void close() throws IOException {
-        filmService.close();
     }
 }

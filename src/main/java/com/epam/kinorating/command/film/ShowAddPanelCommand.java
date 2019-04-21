@@ -11,17 +11,12 @@ import java.io.IOException;
 public class ShowAddPanelCommand implements Command {
     public static final String NAME = "add_panel";
     private static final String FORWARD_COMMAND_ATTRIBUTE = "forward_command";
-    private static final String EDIT_PANEL_PAGE = "WEB-INF/edit.jsp";
+    private static final String EDIT_PANEL_PAGE = "/WEB-INF/edit.jsp";
 
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         request.setAttribute(FORWARD_COMMAND_ATTRIBUTE, CreateFilmCommand.NAME);
         return new CommandResult(EDIT_PANEL_PAGE, true);
-    }
-
-    @Override
-    public void close() throws IOException {
-
     }
 }

@@ -37,9 +37,4 @@ public class UpdateUserCommand implements Command {
         String referer = request.getHeader(REFERER);
         return new CommandResult(referer, false);
     }
-
-    @Override
-    public void close() throws IOException {
-        userService.close();
-    }
 }

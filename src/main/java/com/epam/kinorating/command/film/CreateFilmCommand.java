@@ -26,13 +26,8 @@ public class CreateFilmCommand implements Command {
         String title = request.getParameter(TITLE_ATTRIBUTE);
         String description = request.getParameter(DESCRIPTION_ATTRIBUTE);
         Film film = new Film(null, title, description, 0);
-        filmService.addNewFilm(film);
+        filmService.saveFilm(film);
 
         return new CommandResult(request.getContextPath(), false);
-    }
-
-    @Override
-    public void close() throws IOException {
-        filmService.close();
     }
 }

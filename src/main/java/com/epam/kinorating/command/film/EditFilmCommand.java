@@ -32,16 +32,11 @@ public class EditFilmCommand implements Command {
         String title = request.getParameter(TITLE_PARAMETER);
         String description = request.getParameter(DESCRIPTION_PARAMETER);
         Film film = new Film(id, title, description, 0);
-        filmService.update(id, film);
+        filmService.saveFilm(film);
 
         uriBuilder.setPath(request.getContextPath());
         uriBuilder.addParameter(ID_PARAMETER, idString);
         uriBuilder.addParameter(Command.NAME, ShowFilmCommand.NAME);
         return new CommandResult(uriBuilder.toString(), false);
-    }
-
-    @Override
-    public void close() throws IOException {
-        filmService.close();
     }
 }

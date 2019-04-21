@@ -16,7 +16,7 @@ public class ShowEditPanelCommand implements Command {
 
     private static final String ID_PARAMETER = "id";
     private static final String FORWARD_COMMAND_ATTRIBUTE = "forward_command";
-    private static final String EDIT_PANEL_PAGE = "WEB-INF/edit.jsp";
+    private static final String EDIT_PANEL_PAGE = "/WEB-INF/edit.jsp";
     private final FilmService filmService;
 
     public ShowEditPanelCommand(FilmService filmService) {
@@ -31,10 +31,5 @@ public class ShowEditPanelCommand implements Command {
         filmOptional.ifPresent(film -> request.setAttribute(Film.NAME, film));
         request.setAttribute(FORWARD_COMMAND_ATTRIBUTE, EditFilmCommand.NAME);
         return new CommandResult(EDIT_PANEL_PAGE, true);
-    }
-
-    @Override
-    public void close() throws IOException {
-        filmService.close();
     }
 }

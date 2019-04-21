@@ -8,7 +8,7 @@
 <div class="film-info">
     <h2 class="title-wrapper">
         <a href="${pageContext.request.contextPath}?command=show&id=${requestScope.film.id}" class="title service">
-            ${requestScope.film.title}
+            <c:out value="${requestScope.film.title}" />
         </a>
     </h2>
     <p class="service"><fmt:message key="film.rating"/>:
@@ -23,7 +23,7 @@
     </p>
 </div>
 <p class="description">
-    ${requestScope.film.description}
+    <c:out value="${requestScope.film.description}" />
 </p>
 <div class="tools">
     <c:if test="${param.isMoreNeeded}">

@@ -1,6 +1,6 @@
 package com.epam.kinorating.exception;
 
-public class ConnectionPoolException extends Exception {
+public class ConnectionPoolException extends RuntimeException {
     public ConnectionPoolException() {
     }
 

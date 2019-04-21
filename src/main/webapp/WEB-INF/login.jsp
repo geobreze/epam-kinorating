@@ -25,9 +25,9 @@
                 <p class="service"><fmt:message key="login.label.password"/></p>
                 <input type="password" name="password"/>
                 <br/>
-                <c:if test="${not empty param.error}">
+                <c:if test="${not empty param.error and param.error eq 1}">
                     <div class="error service">
-                            ${param.error}
+                            <fmt:message key="error.login.message" />
                     </div>
                 </c:if>
                 <button class="service"><fmt:message key="login.button.login"/></button>

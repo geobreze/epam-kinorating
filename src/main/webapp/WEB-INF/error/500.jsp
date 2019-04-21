@@ -18,7 +18,7 @@
 <div class="wrapper">
     <div class="log-in-wrapper pane-wrapper">
         <div class="error-wrapper pane service">
-            <fmt:message key="error.notfound.message"/>
+            <fmt:message key="error.server.message"/>
             <form action="${pageContext.request.contextPath}/">
                 <button class="service"><fmt:message key="button.index"/></button>
             </form>

@@ -5,6 +5,8 @@ import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.model.database.ConnectionPool;
 import com.epam.kinorating.model.entity.Entity;
 import com.epam.kinorating.model.entity.builder.Builder;
+import com.sun.javafx.binding.StringFormatter;
+import javafx.beans.binding.StringExpression;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,80 +20,66 @@ import java.util.Optional;
 
 public abstract class AbstractDao<T extends Entity> implements DataAccessObject<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
-    private final Connection connection;
+    private static final String DELETE_BY_ID_QUERY = "DELETE FROM %s WHERE id = ?";
 
-    public AbstractDao(Connection connection) {
+    private final Connection connection;
+    private final Builder<T> builder;
+
+    public AbstractDao(Connection connection, Builder<T> builder) {
         this.connection = connection;
+        this.builder = builder;
     }
 
     protected void executeUpdate(String query, Object... params) throws DaoException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Optional<Connection> optionalConnection = Optional.empty();
         try {
-            Connection connection = connectionPool.getConnection();
-            optionalConnection = Optional.of(connection);
-
             PreparedStatement statement = connection.prepareStatement(query);
             prepareStatement(statement, params);
 
             LOGGER.debug("Prepared statement: {}", statement);
 
             statement.executeUpdate();
-        } catch (ConnectionPoolException | SQLException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
-        } finally {
-            optionalConnection.ifPresent(connectionPool::releaseConnection);
         }
     }
 
-    protected List<T> executeQuery(String query, Builder<T> builder, Object... params) throws DaoException {
+    protected List<T> executeQuery(String query, Object... params) throws DaoException {
         List<T> resultList = new ArrayList<>();
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Optional<Connection> optionalConnection = Optional.empty();
         try {
-            Connection connection = connectionPool.getConnection();
-            optionalConnection = Optional.of(connection);
-
             PreparedStatement statement = connection.prepareStatement(query);
             prepareStatement(statement, params);
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                T builtObject = builder.build(resultSet);
-                resultList.add(builtObject);
+                if(!resultSet.wasNull()) {
+                    T builtObject = builder.build(resultSet);
+                    resultList.add(builtObject);
+                }
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
-        } finally {
-            optionalConnection.ifPresent(connectionPool::releaseConnection);
         }
         return resultList;
     }
 
-    protected Optional<T> executeQueryForSingleResult(String query, Builder<T> builder, Object... params) throws DaoException {
-        List<T> itemsList = executeQuery(query, builder, params);
-        Optional<T> result;
+    protected Optional<T> executeQueryForSingleResult(String query, Object... params) throws DaoException {
+        List<T> itemsList = executeQuery(query, params);
+        Optional<T> result = Optional.empty();
         if (itemsList.size() == 1) {
             T firstItem = itemsList.get(0);
             result = Optional.of(firstItem);
-        } else {
-            result = Optional.empty();
         }
         return result;
     }
 
     protected String buildRemoveByIdQuery(String tableName) {
-        return "DELETE FROM " + tableName + " WHERE id = ?";
+        StringExpression queryExpression = StringFormatter.format(DELETE_BY_ID_QUERY, tableName);
+        return queryExpression.getValue();
     }
 
     private void prepareStatement(PreparedStatement statement, Object... params) throws SQLException {
         for (int i = 1; i < params.length + 1; i++) {
             statement.setObject(i, params[i - 1]);
         }
-    }
-
-    @Override
-    public void close() {
-        ConnectionPool.getInstance().releaseConnection(connection);
     }
 }

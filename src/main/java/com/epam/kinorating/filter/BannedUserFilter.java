@@ -35,11 +35,10 @@ public class BannedUserFilter implements Filter {
         String command = request.getParameter(Command.NAME);
         User user = (User) session.getAttribute(User.NAME);
         if (user != null && user.isBan() && !ignoredCommands.contains(command)) {
-            // TODO: redirect to error page
+            request.getRequestDispatcher(forwardUrl).forward(servletRequest, servletResponse);
         } else {
-
+            filterChain.doFilter(servletRequest, servletResponse);
         }
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

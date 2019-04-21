@@ -4,6 +4,6 @@ import com.epam.kinorating.model.entity.Entity;
 
 import java.io.Closeable;
 
-public interface Service<T extends Entity> extends Closeable, AutoCloseable {
+public interface Service<T extends Entity> {
 
 }

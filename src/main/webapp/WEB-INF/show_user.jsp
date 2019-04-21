@@ -21,7 +21,9 @@
         <div class="content-panel pane">
             <div class="pane">
                 <div class="login-wrapper">
-                    <h2 class="service user-login">${requestScope.user.login}</h2>
+                    <h2 class="service user-login">
+                        <c:out value="${requestScope.user.login}" />
+                    </h2>
                 </div>
                 <form action="${pageContext.request.contextPath}/" class="user-edit" method="POST">
                     <input type="hidden" name="command" value="update_user">

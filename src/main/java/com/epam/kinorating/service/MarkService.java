@@ -38,9 +38,4 @@ public class MarkService implements Service<Mark> {
             throw new ServiceException(e);
         }
     }
-
-    @Override
-    public void close() throws IOException {
-        markDao.close();
-    }
 }

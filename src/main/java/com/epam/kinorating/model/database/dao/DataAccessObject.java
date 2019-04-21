@@ -7,7 +7,7 @@ import java.io.Closeable;
 import java.util.List;
 import java.util.Optional;
 
-public interface DataAccessObject<T extends Entity> extends Closeable, AutoCloseable {
+public interface DataAccessObject<T extends Entity> {
     List<T> findAll() throws DaoException;
 
     Optional<T> findById(Integer id) throws DaoException;
@@ -15,6 +15,4 @@ public interface DataAccessObject<T extends Entity> extends Closeable, AutoClose
     void save(T entity) throws DaoException;
 
     void removeById(Integer id) throws DaoException;
-
-    void update(Integer id, T entity) throws DaoException;
 }

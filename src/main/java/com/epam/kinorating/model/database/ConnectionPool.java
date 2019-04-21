@@ -15,35 +15,32 @@ public class ConnectionPool {
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final int POOL_SIZE = 5;
     private static final ConnectionPool instance = new ConnectionPool();
-    private BlockingQueue<Connection> connections;
+    private BlockingQueue<Connection> connections = new ArrayBlockingQueue<>(POOL_SIZE);
 
     private ConnectionPool() {
         LOGGER.info("Creating connection pool");
-        connections = new ArrayBlockingQueue<>(POOL_SIZE);
     }
 
     public static ConnectionPool getInstance() {
         return instance;
     }
 
-    public void initializePool() throws ConnectionPoolException {
+    public void initializePool(ConnectionFactory connectionFactory) {
         LOGGER.info("Initializing connection pool");
         try {
             Class.forName(JDBC_DRIVER);
-        } catch (ClassNotFoundException e) {
-            throw new ConnectionPoolException("JDBC driver is not found", e);
-        }
-        try {
             for (int i = 0; i < POOL_SIZE; ++i) {
-                Connection connection = ConnectionFactory.create();
+                Connection connection = connectionFactory.create();
                 connections.add(connection);
             }
+        } catch (ClassNotFoundException e) {
+            throw new ConnectionPoolException("JDBC driver is not found", e);
         } catch (SQLException e) {
             throw new ConnectionPoolException("Couldn't create connection", e);
         }
     }
 
-    public Connection getConnection() throws ConnectionPoolException {
+    public Connection getConnection() {
         try {
             return connections.take();
         } catch (InterruptedException e) {

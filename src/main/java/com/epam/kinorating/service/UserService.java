@@ -25,10 +25,9 @@ public class UserService implements Service<User> {
         }
     }
 
-    public User getById(Integer id) throws ServiceException {
+    public Optional<User> getById(Integer id) throws ServiceException {
         try {
-            Optional<User> user = userDao.findById(id);
-            return user.orElseThrow(ServiceException::new);
+            return userDao.findById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -50,10 +49,5 @@ public class UserService implements Service<User> {
             throw new ServiceException(e);
         }
         return user;
-    }
-
-    @Override
-    public void close() throws IOException {
-        userDao.close();
     }
 }

@@ -3,6 +3,7 @@ package com.epam.kinorating.model.database.dao;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.model.entity.Comment;
 import com.epam.kinorating.model.entity.User;
+import com.epam.kinorating.model.entity.builder.Builder;
 import com.epam.kinorating.model.entity.builder.CommentBuilder;
 import com.epam.kinorating.model.entity.builder.UserBuilder;
 
@@ -22,33 +23,32 @@ public class CommentDao extends AbstractDao<Comment> {
             "INNER JOIN user u ON u.id = c.user_id WHERE c.film_id = ? ORDER BY last_update DESC";
     private static final String SAVE_COMMENT_QUERY = "INSERT INTO comment (user_id, film_id, text) VALUES (?, ?, ?)";
 
-    public CommentDao(Connection connection) {
-        super(connection);
+    public CommentDao(Connection connection, Builder<Comment> builder) {
+        super(connection, builder);
     }
 
     public List<Comment> findCommentsByFilmId(int filmId) throws DaoException {
-        return executeQuery(FIND_COMMENTS_BY_FILM_ID_QUERY, new CommentBuilder(new UserBuilder()), filmId);
+        return executeQuery(FIND_COMMENTS_BY_FILM_ID_QUERY, filmId);
     }
 
     @Override
     public List<Comment> findAll() throws DaoException {
-        return executeQuery(FIND_ALL_QUERY, new CommentBuilder(new UserBuilder()));
+        return executeQuery(FIND_ALL_QUERY);
     }
 
     @Override
     public Optional<Comment> findById(Integer id) throws DaoException {
-        return executeQueryForSingleResult(FIND_BY_ID_QUERY, new CommentBuilder(new UserBuilder()), id);
-    }
-
-    @Override
-    public void update(Integer id, Comment entity) throws DaoException {
-        // empty...
+        return executeQueryForSingleResult(FIND_BY_ID_QUERY, id);
     }
 
     @Override
     public void save(Comment entity) throws DaoException {
-        User author = entity.getAuthor();
-        executeUpdate(SAVE_COMMENT_QUERY, author.getId(), entity.getFilmId(), entity.getText());
+        if(entity.getId() == null) {
+            User author = entity.getAuthor();
+            executeUpdate(SAVE_COMMENT_QUERY, author.getId(), entity.getFilmId(), entity.getText());
+        } else {
+            // empty...
+        }
     }
 
     @Override

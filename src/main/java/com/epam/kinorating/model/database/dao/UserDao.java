@@ -3,6 +3,7 @@ package com.epam.kinorating.model.database.dao;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.model.entity.Role;
 import com.epam.kinorating.model.entity.User;
+import com.epam.kinorating.model.entity.builder.Builder;
 import com.epam.kinorating.model.entity.builder.UserBuilder;
 
 import java.sql.Connection;
@@ -17,28 +18,22 @@ public class UserDao extends AbstractDao<User> {
     private static final String UPDATE_BAN_AND_ROLE_QUERY = "UPDATE user SET role = ?, ban = ? WHERE id = ?";
 
 
-    public UserDao(Connection connection) {
-        super(connection);
+    public UserDao(Connection connection, Builder<User> builder) {
+        super(connection, builder);
     }
 
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
-        return executeQueryForSingleResult(FIND_BY_LOGIN_AND_PASSWORD_QUERY, new UserBuilder(), login, password);
+        return executeQueryForSingleResult(FIND_BY_LOGIN_AND_PASSWORD_QUERY, login, password);
     }
 
     @Override
     public List<User> findAll() throws DaoException {
-        return executeQuery(FIND_ALL_QUERY, new UserBuilder());
+        return executeQuery(FIND_ALL_QUERY);
     }
 
     @Override
     public Optional<User> findById(Integer id) throws DaoException {
-        return executeQueryForSingleResult(FIND_BY_ID_QUERY, new UserBuilder(), id);
-    }
-
-    @Override
-    public void update(Integer id, User entity) throws DaoException {
-        String banString = entity.isBan() ? "1" : "0";
-        executeUpdate(UPDATE_USER_QUERY, entity.getLogin(), entity.getPassword(), entity.getRole().name(), banString, entity.getId());
+        return executeQueryForSingleResult(FIND_BY_ID_QUERY, id);
     }
 
     public void updateRoleAndBanStatus(Integer id, Role role, boolean ban) throws DaoException {
@@ -48,7 +43,12 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public void save(User entity) throws DaoException {
-        // empty...
+        if(entity.getId() == null) {
+            // empty...
+        } else {
+            String banString = entity.isBan() ? "1" : "0";
+            executeUpdate(UPDATE_USER_QUERY, entity.getLogin(), entity.getPassword(), entity.getRole().name(), banString, entity.getId());
+        }
     }
 
     @Override

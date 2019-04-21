@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8" %>
 
-<fmt:setLocale value="${param.language}"/>
+<fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale"/>
 <!DOCTYPE html>
 <html>
@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     <meta charset="UTF-8"/>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
-    <title><fmt:message key="banned.title"/></title>
+    <title><fmt:message key="error.banned.title"/></title>
 </head>
 <body>
 <jsp:include page="../templates/header.jsp"/>
 <div class="wrapper">
     <div class="log-in-wrapper pane-wrapper">
         <div class="error-wrapper pane service">
-            <fmt:message key="banned.message"/>
+            <fmt:message key="error.banned.message"/>
             <form action="${pageContext.request.contextPath}/" method="POST">
                 <input type="hidden" name="command" value="logout"/>
                 <button class="service"><fmt:message key="button.logout"/></button>

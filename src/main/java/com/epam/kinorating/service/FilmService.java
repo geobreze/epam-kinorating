@@ -40,6 +40,9 @@ public class FilmService implements Service<Film> {
             List<Comment> comments = commentService.findCommentsByFilmId(id);
             Optional<Film> filmOptional = filmDao.findById(id);
             filmOptional.ifPresent(film -> film.setComments(comments));
+            if(!filmOptional.isPresent()) {
+                System.out.println("Film is empty " + id);
+            }
             return filmOptional;
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -54,24 +57,11 @@ public class FilmService implements Service<Film> {
         }
     }
 
-    public void update(int id, Film film) throws ServiceException {
-        try {
-            filmDao.update(id, film);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public void addNewFilm(Film film) throws ServiceException {
+    public void saveFilm(Film film) throws ServiceException {
         try {
             filmDao.save(film);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-    }
-
-    @Override
-    public void close() throws IOException {
-        filmDao.close();
     }
 }

@@ -38,5 +38,15 @@ public class Film extends Entity implements Serializable {
         this.comments = comments;
     }
 
+    @Override
+    public String toString() {
+        return "Film{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", mark=" + mark +
+                ", comments=" + comments +
+                '}';
+    }
+
     //TODO:equals...
 }

@@ -7,7 +7,9 @@
 
 <div id="comment${requestScope.comment.id}" class="comment">
     <div class="comment-header">
-        <span class="service">${requestScope.comment.author.login}</span>
+        <span class="service">
+            <c:out value="${requestScope.comment.author.login}"/>
+        </span>
         <c:if test="${sessionScope.user.role == 'ADMIN'}">
             <form action="${pageContext.request.contextPath}/" method="POST">
                 <input type="hidden" name="command" value="delete_comment"/>
@@ -18,6 +20,6 @@
         </c:if>
     </div>
     <p>
-        ${requestScope.comment.text}
+        <c:out value="${requestScope.comment.text}" />
     </p>
 </div>

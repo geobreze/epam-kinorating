@@ -15,6 +15,11 @@
         <url-pattern/>
     </servlet-mapping>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/error/404.jsp</location>
+    </error-page>
+
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>com.epam.kinorating.filter.EncodingFilter</filter-class>
@@ -63,7 +68,7 @@
         <init-param>
             <param-name>forwardUrl</param-name>
             <param-value>
-                WEB-INF/error/banned.jsp
+                /WEB-INF/error/banned.jsp
             </param-value>
         </init-param>
         <init-param>

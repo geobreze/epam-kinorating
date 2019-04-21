@@ -32,7 +32,7 @@
                 <c:forEach var="user" items="${requestScope.users}">
                     <tr>
                         <td>
-                                ${user.login}
+                                <c:out value="${user.login}" />
                         </td>
                         <td>
                                 ${user.role}

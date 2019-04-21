@@ -38,9 +38,4 @@ public class CommentService implements Service<Comment> {
             throw new ServiceException(e);
         }
     }
-
-    @Override
-    public void close() throws IOException {
-        commentDao.close();
-    }
 }

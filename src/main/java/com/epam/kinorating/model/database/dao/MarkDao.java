@@ -2,6 +2,7 @@ package com.epam.kinorating.model.database.dao;
 
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.model.entity.Mark;
+import com.epam.kinorating.model.entity.builder.Builder;
 import com.epam.kinorating.model.entity.builder.MarkBuilder;
 
 import java.sql.Connection;
@@ -13,8 +14,8 @@ public class MarkDao extends AbstractDao<Mark> {
     private static final String REMOVE_BY_USER_AND_FILM_ID_QUERY = "DELETE FROM mark WHERE user_id = ? AND film_id = ?";
     private static final String ADD_MARK_QUERY = "INSERT INTO mark (film_id, user_id, value) VALUES (?, ?, ?)";
 
-    public MarkDao(Connection connection) {
-        super(connection);
+    public MarkDao(Connection connection, Builder<Mark> builder) {
+        super(connection, builder);
     }
 
     @Override
@@ -29,7 +30,11 @@ public class MarkDao extends AbstractDao<Mark> {
 
     @Override
     public void save(Mark entity) throws DaoException {
-        executeUpdate(ADD_MARK_QUERY, entity.getFilmId(), entity.getUserId(), entity.getValue());
+        if(entity.getId() == null) {
+            executeUpdate(ADD_MARK_QUERY, entity.getFilmId(), entity.getUserId(), entity.getValue());
+        } else {
+            // empty...
+        }
     }
 
     @Override
@@ -42,12 +47,7 @@ public class MarkDao extends AbstractDao<Mark> {
         executeUpdate(REMOVE_BY_USER_AND_FILM_ID_QUERY, userId, filmId);
     }
 
-    @Override
-    public void update(Integer id, Mark entity) throws DaoException {
-
-    }
-
     public Optional<Mark> findByUserAndFilmId(int userId, int filmId) throws DaoException {
-        return executeQueryForSingleResult(FIND_BY_USER_AND_FILM_ID_QUERY, new MarkBuilder(), userId, filmId);
+        return executeQueryForSingleResult(FIND_BY_USER_AND_FILM_ID_QUERY, userId, filmId);
     }
 }

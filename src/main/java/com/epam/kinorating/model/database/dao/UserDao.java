@@ -1,29 +1,32 @@
 package com.epam.kinorating.model.database.dao;
 
 import com.epam.kinorating.exception.DaoException;
+import com.epam.kinorating.model.database.ProxyConnection;
+import com.epam.kinorating.model.database.utils.Hasher;
 import com.epam.kinorating.model.entity.Role;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.model.entity.builder.Builder;
-import com.epam.kinorating.model.entity.builder.UserBuilder;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
 public class UserDao extends AbstractDao<User> {
     private static final String FIND_BY_ID_QUERY = "SELECT id AS user_id, login, password, role, ban FROM user WHERE id = ?";
     private static final String FIND_ALL_QUERY = "SELECT id AS user_id, login, password, role, ban FROM user";
-    private static final String FIND_BY_LOGIN_AND_PASSWORD_QUERY = "SELECT id AS user_id, login, password, role, ban FROM user WHERE login = ? AND password = MD5(?);";
-    private static final String UPDATE_USER_QUERY = "UPDATE user SET login = ?, password = MD5(?), role = ?, ban = ? WHERE id = ?";
+    private static final String FIND_BY_LOGIN_AND_PASSWORD_QUERY = "SELECT id AS user_id, login, password, role, ban FROM user WHERE login = ? AND password = ?;";
+    private static final String UPDATE_USER_QUERY = "UPDATE user SET login = ?, password = ?, role = ?, ban = ? WHERE id = ?";
     private static final String UPDATE_BAN_AND_ROLE_QUERY = "UPDATE user SET role = ?, ban = ? WHERE id = ?";
 
+    private final Hasher hasher;
 
-    public UserDao(Connection connection, Builder<User> builder) {
+    public UserDao(ProxyConnection connection, Builder<User> builder, Hasher hasher) {
         super(connection, builder);
+        this.hasher = hasher;
     }
 
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
-        return executeQueryForSingleResult(FIND_BY_LOGIN_AND_PASSWORD_QUERY, login, password);
+        String hashedPassword = hasher.hash(password);
+        return executeQueryForSingleResult(FIND_BY_LOGIN_AND_PASSWORD_QUERY, login, hashedPassword);
     }
 
     @Override
@@ -43,11 +46,12 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public void save(User entity) throws DaoException {
-        if(entity.getId() == null) {
-            // empty...
-        } else {
+        // insert is not implemented since
+        // scope of the project does not include registration
+        if (entity.getId() != null) {
             String banString = entity.isBan() ? "1" : "0";
-            executeUpdate(UPDATE_USER_QUERY, entity.getLogin(), entity.getPassword(), entity.getRole().name(), banString, entity.getId());
+            String hashedPassword = hasher.hash(entity.getPassword());
+            executeUpdate(UPDATE_USER_QUERY, entity.getLogin(), hashedPassword, entity.getRole().name(), banString, entity.getId());
         }
     }
 

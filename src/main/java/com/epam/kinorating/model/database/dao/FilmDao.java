@@ -1,11 +1,10 @@
 package com.epam.kinorating.model.database.dao;
 
 import com.epam.kinorating.exception.DaoException;
+import com.epam.kinorating.model.database.ProxyConnection;
 import com.epam.kinorating.model.entity.Film;
 import com.epam.kinorating.model.entity.builder.Builder;
-import com.epam.kinorating.model.entity.builder.FilmBuilder;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +14,7 @@ public class FilmDao extends AbstractDao<Film> {
     private static final String ADD_FILM_QUERY = "INSERT INTO film (title, description) VALUES (?, ?)";
     private static final String UPDATE_FILM_QUERY = "UPDATE film SET title = ?, description = ? WHERE id = ?";
 
-    public FilmDao(Connection connection, Builder<Film> builder) {
+    public FilmDao(ProxyConnection connection, Builder<Film> builder) {
         super(connection, builder);
     }
 

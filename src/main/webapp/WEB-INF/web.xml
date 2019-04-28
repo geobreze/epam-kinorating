@@ -20,6 +20,11 @@
         <location>/WEB-INF/error/404.jsp</location>
     </error-page>
 
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/error/500.jsp</location>
+    </error-page>
+
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>com.epam.kinorating.filter.EncodingFilter</filter-class>
@@ -53,7 +58,7 @@
         <init-param>
             <param-name>ignoredCommands</param-name>
             <param-value>
-                index,login,change_language
+                index,login,change_language,set_timezone
             </param-value>
         </init-param>
     </filter>
@@ -74,7 +79,7 @@
         <init-param>
             <param-name>ignoredCommands</param-name>
             <param-value>
-                logout,change_language
+                logout,change_language,set_timezone
             </param-value>
         </init-param>
     </filter>
@@ -89,7 +94,7 @@
         <init-param>
             <param-name>adminCommands</param-name>
             <param-value>
-                delete_comment,create_film,delete_film,edit_film,add_panel,edit_panel,remove_mark,change_user_ban,set_role,show_users,show_user,update_user
+                delete_comment,create_film,delete_film,edit_film,add_panel,edit_panel,change_user_ban,set_role,show_users,show_user,update_user
             </param-value>
         </init-param>
         <init-param>

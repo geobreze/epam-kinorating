@@ -6,13 +6,10 @@ import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.service.UserService;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Optional;
 
 public class LogInCommand implements Command {
@@ -21,7 +18,7 @@ public class LogInCommand implements Command {
     private static final String LOGIN_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
     private static final String ERROR_ATTRIBUTE = "error";
-    private static final String INVALID_LOGIN_OR_PASSWORD = "1";
+    private static final String INVALID_LOGIN_OR_PASSWORD = "error.login.message";
     private final UserService userService;
     private final URIBuilder uriBuilder;
 

@@ -1,9 +1,5 @@
 package com.epam.kinorating.factory;
 
-import com.epam.kinorating.model.database.dao.CommentDao;
-import com.epam.kinorating.model.database.dao.FilmDao;
-import com.epam.kinorating.model.database.dao.MarkDao;
-import com.epam.kinorating.model.database.dao.UserDao;
 import com.epam.kinorating.model.entity.Comment;
 import com.epam.kinorating.model.entity.Film;
 import com.epam.kinorating.model.entity.Mark;

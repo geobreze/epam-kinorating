@@ -1,8 +1,7 @@
 package com.epam.kinorating.model.database.dao;
 
-import com.epam.kinorating.exception.ConnectionPoolException;
 import com.epam.kinorating.exception.DaoException;
-import com.epam.kinorating.model.database.ConnectionPool;
+import com.epam.kinorating.model.database.ProxyConnection;
 import com.epam.kinorating.model.entity.Entity;
 import com.epam.kinorating.model.entity.builder.Builder;
 import com.sun.javafx.binding.StringFormatter;
@@ -10,7 +9,6 @@ import javafx.beans.binding.StringExpression;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,26 +16,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractDao<T extends Entity> implements DataAccessObject<T> {
+public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM %s WHERE id = ?";
 
-    private final Connection connection;
+    private final ProxyConnection connection;
     private final Builder<T> builder;
 
-    public AbstractDao(Connection connection, Builder<T> builder) {
+    public AbstractDao(ProxyConnection connection, Builder<T> builder) {
         this.connection = connection;
         this.builder = builder;
     }
 
-    protected void executeUpdate(String query, Object... params) throws DaoException {
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
+    protected int executeUpdate(String query, Object... params) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             prepareStatement(statement, params);
 
             LOGGER.debug("Prepared statement: {}", statement);
 
-            statement.executeUpdate();
+            return statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -45,15 +42,14 @@ public abstract class AbstractDao<T extends Entity> implements DataAccessObject<
 
     protected List<T> executeQuery(String query, Object... params) throws DaoException {
         List<T> resultList = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             prepareStatement(statement, params);
-
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                if(!resultSet.wasNull()) {
-                    T builtObject = builder.build(resultSet);
-                    resultList.add(builtObject);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    if (!resultSet.wasNull()) {
+                        T builtObject = builder.build(resultSet);
+                        resultList.add(builtObject);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -82,4 +78,5 @@ public abstract class AbstractDao<T extends Entity> implements DataAccessObject<
             statement.setObject(i, params[i - 1]);
         }
     }
+
 }

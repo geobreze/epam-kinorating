@@ -2,12 +2,12 @@ package com.epam.kinorating.controller;
 
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
-import com.epam.kinorating.exception.ConnectionPoolException;
 import com.epam.kinorating.exception.NotFoundException;
-import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.factory.*;
 import com.epam.kinorating.model.database.ConnectionPool;
-import org.apache.http.conn.ConnectTimeoutException;
+import com.epam.kinorating.model.database.ProxyConnection;
+import com.epam.kinorating.model.database.utils.Hasher;
+import com.epam.kinorating.model.database.utils.SHA256Hasher;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 
 public class FrontController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(FrontController.class);
@@ -44,7 +43,7 @@ public class FrontController extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandString = request.getParameter(Command.NAME);
         LOGGER.info("{} command supplied", commandString);
-        Connection connection = null;
+        ProxyConnection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             CommandFactory commandFactory = createCommandFactory(connection);
@@ -72,12 +71,22 @@ public class FrontController extends HttpServlet {
         }
     }
 
-    private CommandFactory createCommandFactory(Connection connection) {
+    private CommandFactory createCommandFactory(ProxyConnection connection) {
         BuilderFactory builderFactory = new BuilderFactory();
-        DaoFactory daoFactory = new DaoFactory(connection, builderFactory);
+        Hasher hasher = new SHA256Hasher();
+        DaoFactory daoFactory = new DaoFactory(connection, builderFactory, hasher);
         ServiceFactory serviceFactory = new ServiceFactory(daoFactory);
         LanguageFactory languageFactory = new LanguageFactory();
         return new CommandFactory(serviceFactory, languageFactory);
     }
 
+
+    @Override
+    public void destroy() {
+        try {
+            ConnectionPool.getInstance().close();
+        } catch (Exception e) {
+            LOGGER.error(e);
+        }
+    }
 }

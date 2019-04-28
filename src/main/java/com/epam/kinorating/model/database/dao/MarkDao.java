@@ -1,39 +1,39 @@
 package com.epam.kinorating.model.database.dao;
 
 import com.epam.kinorating.exception.DaoException;
+import com.epam.kinorating.model.database.ProxyConnection;
 import com.epam.kinorating.model.entity.Mark;
 import com.epam.kinorating.model.entity.builder.Builder;
-import com.epam.kinorating.model.entity.builder.MarkBuilder;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
 public class MarkDao extends AbstractDao<Mark> {
+    private static final String FIND_ALL_QUERY = "SELECT id AS mark_id, user_id, film_id, value FROM mark";
+    private static final String FIND_BY_ID_QUERY = "SELECT id AS mark_id, user_id, film_id, value FROM mark WHERE id = ?";
     private static final String FIND_BY_USER_AND_FILM_ID_QUERY = "SELECT id AS mark_id, user_id, film_id, value FROM mark WHERE user_id = ? AND film_id = ?";
     private static final String REMOVE_BY_USER_AND_FILM_ID_QUERY = "DELETE FROM mark WHERE user_id = ? AND film_id = ?";
     private static final String ADD_MARK_QUERY = "INSERT INTO mark (film_id, user_id, value) VALUES (?, ?, ?)";
 
-    public MarkDao(Connection connection, Builder<Mark> builder) {
+    public MarkDao(ProxyConnection connection, Builder<Mark> builder) {
         super(connection, builder);
     }
 
     @Override
     public List<Mark> findAll() throws DaoException {
-        return null;
+        return executeQuery(FIND_ALL_QUERY);
     }
 
     @Override
     public Optional<Mark> findById(Integer id) throws DaoException {
-        return Optional.empty();
+        return executeQueryForSingleResult(FIND_BY_ID_QUERY, id);
     }
 
     @Override
     public void save(Mark entity) throws DaoException {
+        // update makes no sense
         if(entity.getId() == null) {
             executeUpdate(ADD_MARK_QUERY, entity.getFilmId(), entity.getUserId(), entity.getValue());
-        } else {
-            // empty...
         }
     }
 

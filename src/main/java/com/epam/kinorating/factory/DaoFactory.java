@@ -1,27 +1,31 @@
 package com.epam.kinorating.factory;
 
-import com.epam.kinorating.model.database.dao.*;
+import com.epam.kinorating.model.database.ProxyConnection;
+import com.epam.kinorating.model.database.dao.CommentDao;
+import com.epam.kinorating.model.database.dao.FilmDao;
+import com.epam.kinorating.model.database.dao.MarkDao;
+import com.epam.kinorating.model.database.dao.UserDao;
+import com.epam.kinorating.model.database.utils.Hasher;
 import com.epam.kinorating.model.entity.Comment;
 import com.epam.kinorating.model.entity.Film;
 import com.epam.kinorating.model.entity.Mark;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.model.entity.builder.Builder;
-import com.epam.kinorating.model.entity.builder.UserBuilder;
-
-import java.sql.Connection;
 
 public class DaoFactory {
-    private final Connection connection;
+    private final ProxyConnection connection;
     private final BuilderFactory builderFactory;
+    private final Hasher hasher;
 
-    public DaoFactory(Connection connection, BuilderFactory builderFactory) {
+    public DaoFactory(ProxyConnection connection, BuilderFactory builderFactory, Hasher hasher) {
         this.connection = connection;
         this.builderFactory = builderFactory;
+        this.hasher = hasher;
     }
 
     public UserDao createUserDao() {
         Builder<User> userBuilder = builderFactory.createUserBuilder();
-        return new UserDao(connection, userBuilder);
+        return new UserDao(connection, userBuilder, hasher);
     }
 
     public CommentDao createCommentDao() {

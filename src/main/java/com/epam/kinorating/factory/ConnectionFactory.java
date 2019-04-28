@@ -1,5 +1,6 @@
 package com.epam.kinorating.factory;
 
+import com.epam.kinorating.model.database.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,9 +25,10 @@ public class ConnectionFactory {
         password = resourceBundle.getString(PASSWORD_PROPERTY);
     }
 
-    public Connection create() throws SQLException {
-        LOGGER.info("Creating connection");
-        return DriverManager.getConnection(url, user, password);
+    public ProxyConnection create() throws SQLException {
+        LOGGER.debug("Creating connection");
+        Connection connection = DriverManager.getConnection(url, user, password);
+        return new ProxyConnection(connection);
     }
 
 }

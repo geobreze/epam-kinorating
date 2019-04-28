@@ -6,11 +6,12 @@ import com.epam.kinorating.model.database.dao.FilmDao;
 import com.epam.kinorating.model.entity.Comment;
 import com.epam.kinorating.model.entity.Film;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 public class FilmService implements Service<Film> {
+    private static final int MAX_TITLE_LENGTH = 255;
+
     private final FilmDao filmDao;
     private final CommentService commentService;
 
@@ -40,9 +41,6 @@ public class FilmService implements Service<Film> {
             List<Comment> comments = commentService.findCommentsByFilmId(id);
             Optional<Film> filmOptional = filmDao.findById(id);
             filmOptional.ifPresent(film -> film.setComments(comments));
-            if(!filmOptional.isPresent()) {
-                System.out.println("Film is empty " + id);
-            }
             return filmOptional;
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -58,6 +56,14 @@ public class FilmService implements Service<Film> {
     }
 
     public void saveFilm(Film film) throws ServiceException {
+        String title = film.getTitle();
+        String description = film.getDescription();
+        if (title.isEmpty() || description.isEmpty()) {
+            throw new ServiceException("Title and description can't be empty");
+        }
+        if (title.length() > MAX_TITLE_LENGTH) {
+            throw new ServiceException("Title is too long");
+        }
         try {
             filmDao.save(film);
         } catch (DaoException e) {

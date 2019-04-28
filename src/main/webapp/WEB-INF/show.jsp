@@ -51,13 +51,15 @@
                         </c:choose>
                     </form>
                 </div>
-                <form action="${pageContext.request.contextPath}/" method="post" class="new-comment">
+                <form action="${pageContext.request.contextPath}/" method="post" class="new-comment" id="comment-form">
                     <input type="hidden" name="command" value="add_comment"/>
                     <input type="hidden" name="film_id" value="${requestScope.film.id}"/>
                     <p class="service"><fmt:message key="film.show.label.share"/></p>
-                    <textarea name="text" class="content-textarea"></textarea>
-                    <br>
-                    <button class="service"><fmt:message key="button.submit"/></button>
+                    <textarea name="text" class="content-textarea" id="comment-text-input"></textarea>
+                    <div class="service error" id="new-comment-error"></div>
+                    <div>
+                        <button class="service"><fmt:message key="button.submit"/></button>
+                    </div>
                 </form>
                 <div class="comments">
                     <jsp:include page="templates/comments.jsp"/>
@@ -69,5 +71,11 @@
 <jsp:include page="templates/footer.jsp"/>
 
 <script src="${pageContext.request.contextPath}/js/slider.js"></script>
+<script src="${pageContext.request.contextPath}/js/edit_validator.js"></script>
+<script>
+    addCommentValidationListener(
+        '<fmt:message key="error.empty" />'
+    );
+</script>
 </body>
 </html>

@@ -1,29 +1,27 @@
 package com.epam.kinorating.model.database.dao;
 
 import com.epam.kinorating.exception.DaoException;
+import com.epam.kinorating.model.database.ProxyConnection;
 import com.epam.kinorating.model.entity.Comment;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.model.entity.builder.Builder;
-import com.epam.kinorating.model.entity.builder.CommentBuilder;
-import com.epam.kinorating.model.entity.builder.UserBuilder;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
 public class CommentDao extends AbstractDao<Comment> {
-    private static final String FIND_ALL_QUERY = "SELECT c.id AS comment_id, film_id, c.text, " +
+    private static final String FIND_ALL_QUERY = "SELECT c.id AS comment_id, film_id, c.text, c.last_update, " +
             "c.user_id, u.login, u.password, u.role, u.ban FROM comment c " +
             "INNER JOIN user u ON u.id = c.user_id ORDER BY last_update DESC";
-    private static final String FIND_BY_ID_QUERY = "SELECT c.id AS comment_id, film_id, c.text, " +
+    private static final String FIND_BY_ID_QUERY = "SELECT c.id AS comment_id, film_id, c.text, c.last_update, " +
             "c.user_id, u.login, u.password, u.role, u.ban FROM comment c " +
             "INNER JOIN user u ON u.id = c.user_id WHERE c.id = ?";
-    private static final String FIND_COMMENTS_BY_FILM_ID_QUERY = "SELECT c.id AS comment_id, film_id, c.text, " +
+    private static final String FIND_COMMENTS_BY_FILM_ID_QUERY = "SELECT c.id AS comment_id, film_id, c.text, c.last_update, " +
             "c.user_id, u.login, u.password, u.role, u.ban FROM comment c " +
             "INNER JOIN user u ON u.id = c.user_id WHERE c.film_id = ? ORDER BY last_update DESC";
     private static final String SAVE_COMMENT_QUERY = "INSERT INTO comment (user_id, film_id, text) VALUES (?, ?, ?)";
 
-    public CommentDao(Connection connection, Builder<Comment> builder) {
+    public CommentDao(ProxyConnection connection, Builder<Comment> builder) {
         super(connection, builder);
     }
 
@@ -43,11 +41,10 @@ public class CommentDao extends AbstractDao<Comment> {
 
     @Override
     public void save(Comment entity) throws DaoException {
+        // updating comments is redundant function
         if(entity.getId() == null) {
             User author = entity.getAuthor();
             executeUpdate(SAVE_COMMENT_QUERY, author.getId(), entity.getFilmId(), entity.getText());
-        } else {
-            // empty...
         }
     }
 

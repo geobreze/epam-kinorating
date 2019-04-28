@@ -10,7 +10,6 @@ import com.epam.kinorating.service.CommentService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 public class AddCommentCommand implements Command {
     public static final String NAME = "add_comment";
@@ -31,7 +30,7 @@ public class AddCommentCommand implements Command {
         String filmIdString = request.getParameter(FILM_ID_PARAMETER);
         int filmId = Integer.parseInt(filmIdString);
         String text = request.getParameter(TEXT_PARAMETER);
-        Comment comment = new Comment(null, user, filmId, text);
+        Comment comment = new Comment(null, user, filmId, text, null);
         commentService.addNewComment(comment);
 
         String referer = request.getHeader(REFERER);

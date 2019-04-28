@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ltg" uri="localetags" %>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8" %>
 
 <fmt:setLocale value="${sessionScope.language}"/>
@@ -22,4 +23,7 @@
     <p>
         <c:out value="${requestScope.comment.text}" />
     </p>
+    <div class="date service">
+        <ltg:timestamp date="${requestScope.comment.updateTime}"/>
+    </div>
 </div>

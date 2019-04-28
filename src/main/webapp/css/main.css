@@ -77,6 +77,7 @@ a:visited {
 
     .pane * {
         padding: 5px;
+        word-break: break-all;
         box-sizing: border-box;
     }
 
@@ -91,8 +92,8 @@ a:visited {
 
 .error {
     padding: 10px;
-    background-color: #FA8072;
     border-radius: 9px;
+    color: #FF8D8D;
 }
 
 .inline-flex {
@@ -125,7 +126,7 @@ header {
 }
 
 .lang-change {
-    background-color: #f7de83;
+    background-color: #6B81C3;
 }
 
 /* end header */
@@ -286,6 +287,14 @@ header {
     padding-bottom: 7px;
     margin-bottom: 5px;
     width: 100%;
+}
+
+.date {
+    font-size: 0.95rem;
+    border-top: 1px #fff solid;
+    margin-top: 5px;
+    padding-top: 5px;
+    text-align: right;
 }
 
 /* end show panel */

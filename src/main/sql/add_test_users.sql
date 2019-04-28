@@ -1,4 +1,4 @@
 INSERT INTO user (login, password, role)
 VALUES
-  ('admin', MD5('admin'), 'ADMIN'),
-  ('user', MD5('user'), 'USER');
+('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'ADMIN'),
+('user', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'USER');

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib
+        version="2.1"
+        xmlns="http://java.sun.com/xml/ns/javaee"
+>
+    <tlib-version>1.0</tlib-version>
+    <short-name>ltg</short-name>
+    <uri>localetags</uri>
+    <tag>
+        <name>timestamp</name>
+        <tag-class>com.epam.kinorating.tag.TimestampTag</tag-class>
+        <attribute>
+            <name>date</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.time.LocalDateTime</type>
+        </attribute>
+        <body-content>empty</body-content>
+    </tag>
+</taglib>

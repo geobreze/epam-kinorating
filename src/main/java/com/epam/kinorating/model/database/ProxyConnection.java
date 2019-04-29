@@ -3,6 +3,7 @@ package com.epam.kinorating.model.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ProxyConnection implements AutoCloseable {
     private Connection connection;
@@ -13,6 +14,10 @@ public class ProxyConnection implements AutoCloseable {
 
     public PreparedStatement prepareStatement(String sql) throws SQLException {
         return connection.prepareStatement(sql);
+    }
+
+    public Statement createStatement(String sql) throws SQLException {
+        return connection.createStatement();
     }
 
     @Override

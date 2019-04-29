@@ -28,6 +28,29 @@ public class FilmService implements Service<Film> {
         }
     }
 
+    public List<Film> findAllOnPage(int currentPage, int itemsOnPage) throws ServiceException {
+        int offset = (currentPage - 1) * itemsOnPage;
+        try {
+            return filmDao.findAllWithLimit(itemsOnPage, offset);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public int countPages(int elementsOnPage) throws ServiceException {
+        try {
+            int filmCount = filmDao.getFilmCount();
+            double pages = (double)filmCount / (double)elementsOnPage;
+            return (int) Math.ceil(pages);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public boolean validatePage(int pages, int page) {
+        return page <= pages && page > 0;
+    }
+
     public Optional<Film> findById(Integer id) throws ServiceException {
         try {
             return filmDao.findById(id);

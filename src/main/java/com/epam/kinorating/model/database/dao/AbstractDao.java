@@ -9,9 +9,11 @@ import javafx.beans.binding.StringExpression;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +21,8 @@ import java.util.Optional;
 public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM %s WHERE id = ?";
+    private static final String GET_COUNT_QUERY = "SELECT COUNT(*) row_count FROM ";
+    private static final String ROW_COUNT = "row_count";
 
     private final ProxyConnection connection;
     private final Builder<T> builder;
@@ -56,6 +60,18 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
             throw new DaoException(e);
         }
         return resultList;
+    }
+
+    protected int getEntriesCount(String table) throws DaoException {
+        String builtStatement = GET_COUNT_QUERY + table;
+        try(Statement statement = connection.createStatement(builtStatement)) {
+            try(ResultSet resultSet = statement.executeQuery(builtStatement)) {
+                resultSet.next();
+                return resultSet.getInt(ROW_COUNT);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     protected Optional<T> executeQueryForSingleResult(String query, Object... params) throws DaoException {

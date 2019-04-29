@@ -22,6 +22,11 @@
                     </jsp:include>
                 </div>
             </c:forEach>
+            <div class="pane paging-wrapper">
+                <div class="paging">
+                    <jsp:include page="templates/pages.jsp" />
+                </div>
+            </div>
         </div>
     </div>
 </div>

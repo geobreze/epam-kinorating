@@ -13,6 +13,8 @@ import com.epam.kinorating.service.CommentService;
 import com.epam.kinorating.service.FilmService;
 import com.epam.kinorating.service.MarkService;
 import com.epam.kinorating.service.UserService;
+import com.sun.javafx.image.IntPixelGetter;
+import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.http.client.utils.URIBuilder;
 
 public class CommandFactory {
@@ -43,7 +45,8 @@ public class CommandFactory {
             }
             case ShowAllFilmsCommand.NAME: {
                 FilmService filmService = serviceFactory.createFilmService();
-                commandObject = new ShowAllFilmsCommand(filmService);
+                IntegerValidator integerValidator = IntegerValidator.getInstance();
+                commandObject = new ShowAllFilmsCommand(filmService, integerValidator);
                 break;
             }
             case ShowFilmCommand.NAME: {

@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class FilmDao extends AbstractDao<Film> {
     private static final String FIND_ALL_QUERY = "SELECT f.id AS film_id, f.title, f.description, AVG(m.value) AS mark, COUNT(m.value) AS count FROM film f LEFT JOIN mark m ON f.id = m.film_id GROUP BY f.id ORDER BY f.last_update DESC";
+    private static final String FIND_ALL_WITH_LIMIT_QUERY = "SELECT f.id AS film_id, f.title, f.description, AVG(m.value) AS mark, COUNT(m.value) AS count FROM film f LEFT JOIN mark m ON f.id = m.film_id GROUP BY f.id ORDER BY f.last_update DESC LIMIT ? OFFSET ?";
     private static final String FIND_BY_ID_QUERY = "SELECT f.id AS film_id, f.title, f.description, AVG(m.value) AS mark, COUNT(m.value) AS count FROM film f LEFT JOIN mark m ON f.id = m.film_id WHERE f.id = ? GROUP BY f.id";
     private static final String ADD_FILM_QUERY = "INSERT INTO film (title, description) VALUES (?, ?)";
     private static final String UPDATE_FILM_QUERY = "UPDATE film SET title = ?, description = ? WHERE id = ?";
@@ -21,6 +22,14 @@ public class FilmDao extends AbstractDao<Film> {
     @Override
     public List<Film> findAll() throws DaoException {
         return executeQuery(FIND_ALL_QUERY);
+    }
+
+    public List<Film> findAllWithLimit(int limit, int offset) throws DaoException {
+        return executeQuery(FIND_ALL_WITH_LIMIT_QUERY, limit, offset);
+    }
+
+    public int getFilmCount() throws DaoException {
+        return getEntriesCount(Film.NAME);
     }
 
     @Override

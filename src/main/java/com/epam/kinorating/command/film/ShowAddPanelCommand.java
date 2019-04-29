@@ -6,7 +6,6 @@ import com.epam.kinorating.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class ShowAddPanelCommand implements Command {
     public static final String NAME = "add_panel";

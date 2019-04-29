@@ -36,7 +36,7 @@ public class ShowAllFilmsCommand implements Command {
         String currentPageString = request.getParameter(CURRENT_PAGE_ATTRIBUTE);
         Integer currentPage = integerValidator.validate(currentPageString);
 
-        if(currentPage == null || !filmService.validatePage(pages, currentPage)) {
+        if (currentPage == null || !filmService.validatePage(pages, currentPage)) {
             currentPage = DEFAULT_PAGE;
         }
         request.setAttribute(CURRENT_PAGE_ATTRIBUTE, currentPage);

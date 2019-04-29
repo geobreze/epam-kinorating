@@ -9,7 +9,6 @@ import javafx.beans.binding.StringExpression;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,8 +63,8 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     protected int getEntriesCount(String table) throws DaoException {
         String builtStatement = GET_COUNT_QUERY + table;
-        try(Statement statement = connection.createStatement(builtStatement)) {
-            try(ResultSet resultSet = statement.executeQuery(builtStatement)) {
+        try (Statement statement = connection.createStatement(builtStatement)) {
+            try (ResultSet resultSet = statement.executeQuery(builtStatement)) {
                 resultSet.next();
                 return resultSet.getInt(ROW_COUNT);
             }

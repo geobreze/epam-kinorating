@@ -39,7 +39,7 @@ public class FilmDao extends AbstractDao<Film> {
 
     @Override
     public void save(Film entity) throws DaoException {
-        if(entity.getId() == null) {
+        if (entity.getId() == null) {
             executeUpdate(ADD_FILM_QUERY, entity.getTitle(), entity.getDescription());
         } else {
             executeUpdate(UPDATE_FILM_QUERY, entity.getTitle(), entity.getDescription(), entity.getId());

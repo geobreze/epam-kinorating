@@ -32,7 +32,7 @@ public class MarkDao extends AbstractDao<Mark> {
     @Override
     public void save(Mark entity) throws DaoException {
         // update makes no sense
-        if(entity.getId() == null) {
+        if (entity.getId() == null) {
             executeUpdate(ADD_MARK_QUERY, entity.getFilmId(), entity.getUserId(), entity.getValue());
         }
     }

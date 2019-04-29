@@ -40,7 +40,7 @@ public class FilmService implements Service<Film> {
     public int countPages(int elementsOnPage) throws ServiceException {
         try {
             int filmCount = filmDao.getFilmCount();
-            double pages = (double)filmCount / (double)elementsOnPage;
+            double pages = (double) filmCount / (double) elementsOnPage;
             return (int) Math.ceil(pages);
         } catch (DaoException e) {
             throw new ServiceException(e);

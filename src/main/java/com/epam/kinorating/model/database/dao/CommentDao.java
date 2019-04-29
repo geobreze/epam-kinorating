@@ -42,7 +42,7 @@ public class CommentDao extends AbstractDao<Comment> {
     @Override
     public void save(Comment entity) throws DaoException {
         // updating comments is redundant function
-        if(entity.getId() == null) {
+        if (entity.getId() == null) {
             User author = entity.getAuthor();
             executeUpdate(SAVE_COMMENT_QUERY, author.getId(), entity.getFilmId(), entity.getText());
         }

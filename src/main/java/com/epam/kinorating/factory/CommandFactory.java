@@ -13,7 +13,6 @@ import com.epam.kinorating.service.CommentService;
 import com.epam.kinorating.service.FilmService;
 import com.epam.kinorating.service.MarkService;
 import com.epam.kinorating.service.UserService;
-import com.sun.javafx.image.IntPixelGetter;
 import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.http.client.utils.URIBuilder;
 

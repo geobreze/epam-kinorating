@@ -6,7 +6,6 @@ import com.epam.kinorating.model.database.dao.UserDao;
 import com.epam.kinorating.model.entity.Role;
 import com.epam.kinorating.model.entity.User;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 

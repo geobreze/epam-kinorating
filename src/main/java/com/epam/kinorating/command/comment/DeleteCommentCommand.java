@@ -7,7 +7,6 @@ import com.epam.kinorating.service.CommentService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class DeleteCommentCommand implements Command {
     public static final String NAME = "delete_comment";

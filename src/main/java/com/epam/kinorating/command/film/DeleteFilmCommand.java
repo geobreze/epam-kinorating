@@ -7,7 +7,6 @@ import com.epam.kinorating.service.FilmService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class DeleteFilmCommand implements Command {
     public static final String NAME = "delete_film";

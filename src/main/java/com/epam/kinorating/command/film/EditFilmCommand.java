@@ -9,7 +9,6 @@ import org.apache.http.client.utils.URIBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class EditFilmCommand implements Command {
     public static final String NAME = "edit_film";

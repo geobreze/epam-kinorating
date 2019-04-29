@@ -8,7 +8,6 @@ import com.epam.kinorating.service.FilmService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class CreateFilmCommand implements Command {
     public static final String NAME = "create_film";

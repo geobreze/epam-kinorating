@@ -5,12 +5,10 @@ import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.model.entity.User;
 import com.epam.kinorating.service.MarkService;
-import org.apache.http.client.utils.URIBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 public class RemoveMarkCommand implements Command {
     public static final String NAME = "remove_mark";

@@ -4,7 +4,10 @@ import com.epam.kinorating.model.database.dao.CommentDao;
 import com.epam.kinorating.model.database.dao.FilmDao;
 import com.epam.kinorating.model.database.dao.MarkDao;
 import com.epam.kinorating.model.database.dao.UserDao;
-import com.epam.kinorating.service.*;
+import com.epam.kinorating.service.CommentService;
+import com.epam.kinorating.service.FilmService;
+import com.epam.kinorating.service.MarkService;
+import com.epam.kinorating.service.UserService;
 
 public class ServiceFactory {
     private final DaoFactory daoFactory;

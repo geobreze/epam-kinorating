@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ltg" uri="localetags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8" %>
 
 <fmt:setLocale value="${sessionScope.language}"/>
@@ -8,8 +9,9 @@
 
 <div id="comment${requestScope.comment.id}" class="comment">
     <div class="comment-header">
-        <span class="service">
+        <span class="service status-${fn:toLowerCase(requestScope.comment.author.status)}">
             <c:out value="${requestScope.comment.author.login}"/>
+            [<fmt:message key="user.status.${fn:toLowerCase(requestScope.comment.author.status)}"/>]
         </span>
         <c:if test="${sessionScope.user.role == 'ADMIN'}">
             <form action="${pageContext.request.contextPath}/" method="POST">

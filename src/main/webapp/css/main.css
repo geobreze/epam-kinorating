@@ -98,6 +98,17 @@ a:visited {
     display: inline-flex;
 }
 
+.status-regular {
+    color: #000000;
+}
+
+.status-gold {
+    color: #ffab2a;
+}
+
+.status-vip {
+    color: #ff0000;
+}
 /* end global */
 
 /* header */

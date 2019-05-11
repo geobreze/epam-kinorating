@@ -3,8 +3,8 @@ package com.epam.kinorating.command.comment;
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.ServiceException;
-import com.epam.kinorating.model.entity.Comment;
-import com.epam.kinorating.model.entity.User;
+import com.epam.kinorating.entity.Comment;
+import com.epam.kinorating.entity.User;
 import com.epam.kinorating.service.CommentService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +31,7 @@ public class AddCommentCommand implements Command {
         int filmId = Integer.parseInt(filmIdString);
         String text = request.getParameter(TEXT_PARAMETER);
         Comment comment = new Comment(null, user, filmId, text, null);
-        commentService.addNewComment(comment);
+        commentService.save(comment);
 
         String referer = request.getHeader(REFERER);
         return new CommandResult(referer, false);

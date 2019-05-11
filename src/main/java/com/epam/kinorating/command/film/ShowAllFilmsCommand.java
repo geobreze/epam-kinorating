@@ -3,8 +3,9 @@ package com.epam.kinorating.command.film;
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.ServiceException;
-import com.epam.kinorating.model.entity.Film;
+import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.service.FilmService;
+import com.epam.kinorating.service.utils.PaginationHelper;
 import org.apache.commons.validator.routines.IntegerValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +24,12 @@ public class ShowAllFilmsCommand implements Command {
     private static final String CURRENT_PAGE_ATTRIBUTE = "current_page";
     private final FilmService filmService;
     private final IntegerValidator integerValidator;
+    private final PaginationHelper paginationHelper;
 
-    public ShowAllFilmsCommand(FilmService filmService, IntegerValidator integerValidator) {
+    public ShowAllFilmsCommand(FilmService filmService, IntegerValidator integerValidator, PaginationHelper paginationHelper) {
         this.filmService = filmService;
         this.integerValidator = integerValidator;
+        this.paginationHelper = paginationHelper;
     }
 
     @Override
@@ -36,7 +39,7 @@ public class ShowAllFilmsCommand implements Command {
         String currentPageString = request.getParameter(CURRENT_PAGE_ATTRIBUTE);
         Integer currentPage = integerValidator.validate(currentPageString);
 
-        if (currentPage == null || !filmService.validatePage(pages, currentPage)) {
+        if (currentPage == null || !paginationHelper.isValidPageNumber(pages, currentPage)) {
             currentPage = DEFAULT_PAGE;
         }
         request.setAttribute(CURRENT_PAGE_ATTRIBUTE, currentPage);

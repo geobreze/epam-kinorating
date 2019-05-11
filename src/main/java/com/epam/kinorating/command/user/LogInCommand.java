@@ -3,7 +3,7 @@ package com.epam.kinorating.command.user;
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.ServiceException;
-import com.epam.kinorating.model.entity.User;
+import com.epam.kinorating.entity.User;
 import com.epam.kinorating.service.UserService;
 import org.apache.http.client.utils.URIBuilder;
 
@@ -32,7 +32,7 @@ public class LogInCommand implements Command {
         String login = request.getParameter(LOGIN_PARAMETER);
         String password = request.getParameter(PASSWORD_PARAMETER);
 
-        Optional<User> user = userService.tryLogin(login, password);
+        Optional<User> user = userService.login(login, password);
 
         CommandResult commandResult;
         HttpSession session = request.getSession();

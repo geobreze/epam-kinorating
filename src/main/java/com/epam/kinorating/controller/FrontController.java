@@ -4,10 +4,10 @@ import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.NotFoundException;
 import com.epam.kinorating.factory.*;
-import com.epam.kinorating.model.database.ConnectionPool;
-import com.epam.kinorating.model.database.ProxyConnection;
-import com.epam.kinorating.model.database.utils.Hasher;
-import com.epam.kinorating.model.database.utils.SHA256Hasher;
+import com.epam.kinorating.database.ConnectionPool;
+import com.epam.kinorating.database.ProxyConnection;
+import com.epam.kinorating.database.utils.SHA256Hasher;
+import com.epam.kinorating.service.utils.PaginationHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,14 +42,15 @@ public class FrontController extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandString = request.getParameter(Command.NAME);
-        LOGGER.info("{} command supplied", commandString);
+        LOGGER.debug("{} command supplied", commandString);
         ProxyConnection connection = null;
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
-            connection = ConnectionPool.getInstance().getConnection();
+            connection = connectionPool.getConnection();
             CommandFactory commandFactory = createCommandFactory(connection);
             Command command = commandFactory.create(commandString);
             CommandResult commandResult = command.execute(request, response);
-            doRoute(request, response, commandResult);
+            dispatch(request, response, commandResult);
         } catch (NotFoundException e) {
             LOGGER.error(e);
             response.sendError(NOT_FOUND_ERROR);
@@ -57,11 +58,13 @@ public class FrontController extends HttpServlet {
             LOGGER.error(e);
             response.sendError(SERVER_ERROR);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            if (connection != null) {
+                connectionPool.releaseConnection(connection);
+            }
         }
     }
 
-    private void doRoute(HttpServletRequest request, HttpServletResponse response, CommandResult commandResult) throws ServletException, IOException {
+    private void dispatch(HttpServletRequest request, HttpServletResponse response, CommandResult commandResult) throws ServletException, IOException {
         String forwardUrl = commandResult.getUrl();
         if (commandResult.isForward()) {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(forwardUrl);
@@ -72,14 +75,10 @@ public class FrontController extends HttpServlet {
     }
 
     private CommandFactory createCommandFactory(ProxyConnection connection) {
-        BuilderFactory builderFactory = new BuilderFactory();
-        Hasher hasher = new SHA256Hasher();
-        DaoFactory daoFactory = new DaoFactory(connection, builderFactory, hasher);
+        DaoFactory daoFactory = new DaoFactory(connection, new BuilderFactory(), new SHA256Hasher());
         ServiceFactory serviceFactory = new ServiceFactory(daoFactory);
-        LanguageFactory languageFactory = new LanguageFactory();
-        return new CommandFactory(serviceFactory, languageFactory);
+        return new CommandFactory(serviceFactory, new PaginationHelper());
     }
-
 
     @Override
     public void destroy() {

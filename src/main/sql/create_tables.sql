@@ -4,6 +4,7 @@ CREATE TABLE user
   login    VARCHAR(20) NOT NULL UNIQUE,
   password CHAR(64)    NOT NULL,
   role     ENUM ('ADMIN', 'USER') DEFAULT 'USER',
+  status  ENUM('REGULAR', 'GOLD', 'VIP') DEFAULT 'REGULAR',
   ban      TINYINT                DEFAULT 0
 );
 

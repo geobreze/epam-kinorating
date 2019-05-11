@@ -1,7 +1,7 @@
 package com.epam.kinorating.filter;
 
 import com.epam.kinorating.command.Command;
-import com.epam.kinorating.model.entity.User;
+import com.epam.kinorating.entity.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

@@ -13,16 +13,17 @@ import com.epam.kinorating.service.CommentService;
 import com.epam.kinorating.service.FilmService;
 import com.epam.kinorating.service.MarkService;
 import com.epam.kinorating.service.UserService;
+import com.epam.kinorating.service.utils.PaginationHelper;
 import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.http.client.utils.URIBuilder;
 
 public class CommandFactory {
     private final ServiceFactory serviceFactory;
-    private final LanguageFactory languageFactory;
+    private final PaginationHelper paginationHelper;
 
-    public CommandFactory(ServiceFactory serviceFactory, LanguageFactory languageFactory) {
+    public CommandFactory(ServiceFactory serviceFactory, PaginationHelper paginationHelper) {
         this.serviceFactory = serviceFactory;
-        this.languageFactory = languageFactory;
+        this.paginationHelper = paginationHelper;
     }
 
     public Command create(String command) {
@@ -45,7 +46,7 @@ public class CommandFactory {
             case ShowAllFilmsCommand.NAME: {
                 FilmService filmService = serviceFactory.createFilmService();
                 IntegerValidator integerValidator = IntegerValidator.getInstance();
-                commandObject = new ShowAllFilmsCommand(filmService, integerValidator);
+                commandObject = new ShowAllFilmsCommand(filmService, integerValidator, paginationHelper);
                 break;
             }
             case ShowFilmCommand.NAME: {
@@ -115,7 +116,7 @@ public class CommandFactory {
                 break;
             }
             case ChangeLanguageCommand.NAME: {
-                commandObject = new ChangeLanguageCommand(languageFactory);
+                commandObject = new ChangeLanguageCommand();
                 break;
             }
             default: {

@@ -8,6 +8,8 @@
 <div class="left-menu pane">
     <span class="service"><fmt:message key="panel.greetings"/>, ${sessionScope.user.login}</span>
     <ul type="none">
+        <li><a href="${pageContext.request.contextPath}" class="service"><fmt:message
+                key="panel.link.index"/></a></li>
         <c:if test="${sessionScope.user.role == 'ADMIN'}">
             <li><a href="${pageContext.request.contextPath}?command=show_users" class="service"><fmt:message
                     key="panel.link.userlist"/></a></li>

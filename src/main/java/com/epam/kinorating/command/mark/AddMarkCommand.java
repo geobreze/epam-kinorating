@@ -3,8 +3,8 @@ package com.epam.kinorating.command.mark;
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.ServiceException;
-import com.epam.kinorating.model.entity.Mark;
-import com.epam.kinorating.model.entity.User;
+import com.epam.kinorating.entity.Mark;
+import com.epam.kinorating.entity.User;
 import com.epam.kinorating.service.MarkService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ public class AddMarkCommand implements Command {
         String valueString = request.getParameter(VALUE_ATTRIBUTE);
         int value = Integer.valueOf(valueString);
         Mark mark = new Mark(null, value, filmId, user.getId());
-        markService.addMark(mark);
+        markService.save(mark);
 
         String referer = request.getHeader(REFERER);
         return new CommandResult(referer, false);

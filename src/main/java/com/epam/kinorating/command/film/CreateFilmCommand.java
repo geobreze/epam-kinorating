@@ -3,7 +3,7 @@ package com.epam.kinorating.command.film;
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.ServiceException;
-import com.epam.kinorating.model.entity.Film;
+import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.service.FilmService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class CreateFilmCommand implements Command {
         String title = request.getParameter(TITLE_ATTRIBUTE);
         String description = request.getParameter(DESCRIPTION_ATTRIBUTE);
         Film film = new Film(null, title, description, 0);
-        filmService.saveFilm(film);
+        filmService.save(film);
 
         return new CommandResult(request.getContextPath(), false);
     }

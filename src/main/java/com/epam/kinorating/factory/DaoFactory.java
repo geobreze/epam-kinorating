@@ -1,16 +1,16 @@
 package com.epam.kinorating.factory;
 
-import com.epam.kinorating.model.database.ProxyConnection;
-import com.epam.kinorating.model.database.dao.CommentDao;
-import com.epam.kinorating.model.database.dao.FilmDao;
-import com.epam.kinorating.model.database.dao.MarkDao;
-import com.epam.kinorating.model.database.dao.UserDao;
-import com.epam.kinorating.model.database.utils.Hasher;
-import com.epam.kinorating.model.entity.Comment;
-import com.epam.kinorating.model.entity.Film;
-import com.epam.kinorating.model.entity.Mark;
-import com.epam.kinorating.model.entity.User;
-import com.epam.kinorating.model.entity.builder.Builder;
+import com.epam.kinorating.database.ProxyConnection;
+import com.epam.kinorating.database.dao.CommentDao;
+import com.epam.kinorating.database.dao.FilmDao;
+import com.epam.kinorating.database.dao.MarkDao;
+import com.epam.kinorating.database.dao.UserDao;
+import com.epam.kinorating.database.utils.Hasher;
+import com.epam.kinorating.entity.Comment;
+import com.epam.kinorating.entity.Film;
+import com.epam.kinorating.entity.Mark;
+import com.epam.kinorating.entity.User;
+import com.epam.kinorating.entity.builder.Builder;
 
 public class DaoFactory {
     private final ProxyConnection connection;

@@ -1,96 +1,17 @@
 package com.epam.kinorating.service;
 
-import com.epam.kinorating.exception.DaoException;
+import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.exception.ServiceException;
-import com.epam.kinorating.model.database.dao.FilmDao;
-import com.epam.kinorating.model.entity.Comment;
-import com.epam.kinorating.model.entity.Film;
 
-import java.util.List;
 import java.util.Optional;
 
-public class FilmService implements Service<Film> {
-    private static final int MAX_TITLE_LENGTH = 255;
+public interface FilmService extends Service<Film>, Pageable<Film> {
+    Optional<Film> findById(Integer id) throws ServiceException;
 
-    private final FilmDao filmDao;
-    private final CommentService commentService;
+    Optional<Film> findByIdWithComments(Integer id) throws ServiceException;
 
-    public FilmService(FilmDao filmDao, CommentService commentService) {
-        this.filmDao = filmDao;
-        this.commentService = commentService;
-    }
+    void removeById(Integer id) throws ServiceException;
 
-    public List<Film> findAll() throws ServiceException {
-        try {
-            return filmDao.findAll();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
+    void save(Film film) throws ServiceException;
 
-    public List<Film> findAllOnPage(int currentPage, int itemsOnPage) throws ServiceException {
-        int offset = (currentPage - 1) * itemsOnPage;
-        try {
-            return filmDao.findAllWithLimit(itemsOnPage, offset);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public int countPages(int elementsOnPage) throws ServiceException {
-        try {
-            int filmCount = filmDao.getFilmCount();
-            double pages = (double) filmCount / (double) elementsOnPage;
-            return (int) Math.ceil(pages);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public boolean validatePage(int pages, int page) {
-        return page <= pages && page > 0;
-    }
-
-    public Optional<Film> findById(Integer id) throws ServiceException {
-        try {
-            return filmDao.findById(id);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public Optional<Film> findByIdWithComments(Integer id) throws ServiceException {
-        try {
-            List<Comment> comments = commentService.findCommentsByFilmId(id);
-            Optional<Film> filmOptional = filmDao.findById(id);
-            filmOptional.ifPresent(film -> film.setComments(comments));
-            return filmOptional;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public void removeById(Integer id) throws ServiceException {
-        try {
-            filmDao.removeById(id);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public void saveFilm(Film film) throws ServiceException {
-        String title = film.getTitle();
-        String description = film.getDescription();
-        if (title.isEmpty() || description.isEmpty()) {
-            throw new ServiceException("Title and description can't be empty");
-        }
-        if (title.length() > MAX_TITLE_LENGTH) {
-            throw new ServiceException("Title is too long");
-        }
-        try {
-            filmDao.save(film);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
 }

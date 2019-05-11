@@ -4,8 +4,8 @@ import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.exception.NotFoundException;
 import com.epam.kinorating.exception.ServiceException;
-import com.epam.kinorating.model.entity.Role;
-import com.epam.kinorating.model.entity.User;
+import com.epam.kinorating.entity.Role;
+import com.epam.kinorating.entity.User;
 import com.epam.kinorating.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class ShowUserCommand implements Command {
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException, NotFoundException {
         String idString = request.getParameter(ID_PARAMETER);
         Integer id = Integer.parseInt(idString);
-        Optional<User> userOptional = userService.getById(id);
+        Optional<User> userOptional = userService.findById(id);
 
         User user = userOptional.orElseThrow(NotFoundException::new);
 

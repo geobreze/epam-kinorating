@@ -1,6 +1,6 @@
 package com.epam.kinorating.factory;
 
-import com.epam.kinorating.model.database.ProxyConnection;
+import com.epam.kinorating.database.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

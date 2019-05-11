@@ -1,10 +1,10 @@
 package com.epam.kinorating.factory;
 
-import com.epam.kinorating.model.entity.Comment;
-import com.epam.kinorating.model.entity.Film;
-import com.epam.kinorating.model.entity.Mark;
-import com.epam.kinorating.model.entity.User;
-import com.epam.kinorating.model.entity.builder.*;
+import com.epam.kinorating.entity.Comment;
+import com.epam.kinorating.entity.Film;
+import com.epam.kinorating.entity.Mark;
+import com.epam.kinorating.entity.User;
+import com.epam.kinorating.entity.builder.*;
 
 public class BuilderFactory {
     public Builder<User> createUserBuilder() {

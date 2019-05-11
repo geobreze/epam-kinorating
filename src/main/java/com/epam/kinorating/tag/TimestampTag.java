@@ -1,6 +1,6 @@
 package com.epam.kinorating.tag;
 
-import com.epam.kinorating.model.entity.Language;
+import com.epam.kinorating.entity.Language;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

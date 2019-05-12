@@ -20,6 +20,7 @@ import java.util.Optional;
 public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM %s WHERE id = ?";
+    private static final String LIMIT_AND_OFFSET = " LIMIT ? OFFSET ?";
     private static final String GET_COUNT_QUERY = "SELECT COUNT(*) row_count FROM ";
     private static final String ROW_COUNT = "row_count";
 
@@ -63,7 +64,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     protected int getEntriesCount(String table) throws DaoException {
         String builtStatement = GET_COUNT_QUERY + table;
-        try (Statement statement = connection.createStatement(builtStatement)) {
+        try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(builtStatement)) {
                 resultSet.next();
                 return resultSet.getInt(ROW_COUNT);
@@ -86,6 +87,10 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     protected String buildRemoveByIdQuery(String tableName) {
         StringExpression queryExpression = StringFormatter.format(DELETE_BY_ID_QUERY, tableName);
         return queryExpression.getValue();
+    }
+
+    protected String addLimitAndOffsetToQuery(String query) {
+        return query + LIMIT_AND_OFFSET;
     }
 
     private void prepareStatement(PreparedStatement statement, Object... params) throws SQLException {

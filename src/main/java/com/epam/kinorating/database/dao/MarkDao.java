@@ -1,5 +1,6 @@
 package com.epam.kinorating.database.dao;
 
+import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.database.ProxyConnection;
 import com.epam.kinorating.entity.Mark;
@@ -22,6 +23,17 @@ public class MarkDao extends AbstractDao<Mark> {
     @Override
     public List<Mark> findAll() throws DaoException {
         return executeQuery(FIND_ALL_QUERY);
+    }
+
+    @Override
+    public int getEntriesCount() throws DaoException {
+        return getEntriesCount(Mark.NAME);
+    }
+
+    @Override
+    public List<Mark> findAllWithLimitAndOffset(int limit, int offset) throws DaoException {
+        String query = addLimitAndOffsetToQuery(FIND_ALL_QUERY);
+        return executeQuery(query, limit, offset);
     }
 
     @Override

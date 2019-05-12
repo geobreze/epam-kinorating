@@ -21,49 +21,57 @@
 <div class="wrapper">
     <div class="pane-wrapper">
         <jsp:include page="templates/left_panel.jsp"/>
-        <div class="edit-panel content-panel pane">
-            <table class="user-table">
-                <caption class="service"><fmt:message key="user.list.table.caption"/></caption>
-                <thead>
-                <tr>
-                    <th class="service"><fmt:message key="user.list.table.header.login"/></th>
-                    <th class="service"><fmt:message key="user.list.table.header.role"/></th>
-                    <th class="service"><fmt:message key="user.list.table.header.banaction"/></th>
-                    <th class="service"><fmt:message key="user.list.table.header.status"/></th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="user" items="${requestScope.users}">
+        <div class="content-panel">
+            <div class="pane">
+                <table class="user-table">
+                    <caption class="service"><fmt:message key="user.list.table.caption"/></caption>
+                    <thead>
                     <tr>
-                        <td>
-                                <c:out value="${user.login}" />
-                        </td>
-                        <td>
-                            <fmt:message key="user.role.${fn:toLowerCase(user.role)}" />
-                        </td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/" method="POST">
-                                <input type="hidden" name="command" value="update_user">
-                                <input type="hidden" name="id" value="${user.id}">
-                                <input type="hidden" name="ban" value="${user.ban ? 'off' : 'on'}">
-                                <button class="service"><fmt:message key="user.action.${user.ban ? 'unban' : 'ban'}"/></button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/" method="POST">
-                                <input type="hidden" name="command" value="update_user">
-                                <input type="hidden" name="id" value="${user.id}">
-                                <select name="status" class="service submit-on-change">
-                                    <c:forEach var="status" items="${requestScope.statuses}">
-                                        <option class="service" ${user.status eq status ? "selected" : ""} value="${status}"><fmt:message key="user.status.${fn:toLowerCase(status)}" /></option>
-                                    </c:forEach>
-                                </select>
-                            </form>
-                        </td>
+                        <th class="service"><fmt:message key="user.list.table.header.login"/></th>
+                        <th class="service"><fmt:message key="user.list.table.header.role"/></th>
+                        <th class="service"><fmt:message key="user.list.table.header.banaction"/></th>
+                        <th class="service"><fmt:message key="user.list.table.header.status"/></th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="user" items="${requestScope.users}">
+                        <tr>
+                            <td>
+                                <c:out value="${user.login}" />
+                            </td>
+                            <td>
+                                <fmt:message key="user.role.${fn:toLowerCase(user.role)}" />
+                            </td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/" method="POST">
+                                    <input type="hidden" name="command" value="update_user">
+                                    <input type="hidden" name="id" value="${user.id}">
+                                    <input type="hidden" name="ban" value="${user.ban ? 'off' : 'on'}">
+                                    <button class="service"><fmt:message key="user.action.${user.ban ? 'unban' : 'ban'}"/></button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/" method="POST">
+                                    <input type="hidden" name="command" value="update_user">
+                                    <input type="hidden" name="id" value="${user.id}">
+                                    <select name="status" class="service submit-on-change">
+                                        <c:forEach var="status" items="${requestScope.statuses}">
+                                            <option class="service" ${user.status eq status ? "selected" : ""} value="${status}"><fmt:message key="user.status.${fn:toLowerCase(status)}" /></option>
+                                        </c:forEach>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <c:set scope="request" var="command" value="show_users" />
+            <div class="pane paging-wrapper">
+                <div class="paging">
+                    <jsp:include page="templates/pages.jsp" />
+                </div>
+            </div>
         </div>
     </div>
 </div>

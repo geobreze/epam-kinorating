@@ -16,7 +16,7 @@ public class ProxyConnection implements AutoCloseable {
         return connection.prepareStatement(sql);
     }
 
-    public Statement createStatement(String sql) throws SQLException {
+    public Statement createStatement() throws SQLException {
         return connection.createStatement();
     }
 

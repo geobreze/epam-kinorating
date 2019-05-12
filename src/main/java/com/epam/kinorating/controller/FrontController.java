@@ -8,6 +8,7 @@ import com.epam.kinorating.database.ConnectionPool;
 import com.epam.kinorating.database.ProxyConnection;
 import com.epam.kinorating.database.utils.SHA256Hasher;
 import com.epam.kinorating.service.utils.PaginationHelper;
+import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

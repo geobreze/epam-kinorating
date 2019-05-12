@@ -22,6 +22,7 @@
                     </jsp:include>
                 </div>
             </c:forEach>
+            <c:set scope="request" var="command" value="show_all" />
             <div class="pane paging-wrapper">
                 <div class="paging">
                     <jsp:include page="templates/pages.jsp" />

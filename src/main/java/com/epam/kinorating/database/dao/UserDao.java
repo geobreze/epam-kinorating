@@ -1,5 +1,6 @@
 package com.epam.kinorating.database.dao;
 
+import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.entity.Status;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.database.ProxyConnection;
@@ -37,6 +38,12 @@ public class UserDao extends AbstractDao<User> {
     }
 
     @Override
+    public List<User> findAllWithLimitAndOffset(int limit, int offset) throws DaoException {
+        String query = addLimitAndOffsetToQuery(FIND_ALL_QUERY);
+        return executeQuery(query, limit, offset);
+    }
+
+    @Override
     public Optional<User> findById(Integer id) throws DaoException {
         return executeQueryForSingleResult(FIND_BY_ID_QUERY, id);
     }
@@ -48,6 +55,11 @@ public class UserDao extends AbstractDao<User> {
 
     public void updateStatus(Integer id, Status status) throws DaoException {
         executeUpdate(UPDATE_STATUS_QUERY, status.name(), id);
+    }
+
+    @Override
+    public int getEntriesCount() throws DaoException {
+        return getEntriesCount(User.NAME);
     }
 
     @Override

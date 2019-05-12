@@ -9,7 +9,7 @@
 
 <jsp:include page="prev_pages.jsp" />
 <form action="${pageContext.request.contextPath}">
-    <input type="hidden" name="command" value="show_all">
+    <input type="hidden" name="command" value="${requestScope.command}">
     <button class="current-page" value="${requestScope.current_page}" name="current_page">${requestScope.current_page}</button>
 </form>
 <jsp:include page="next_pages.jsp" />

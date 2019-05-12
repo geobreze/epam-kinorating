@@ -2,50 +2,31 @@ package com.epam.kinorating.command.film;
 
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
+import com.epam.kinorating.command.utils.PageableContentCommandHelper;
 import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.entity.Film;
-import com.epam.kinorating.service.FilmService;
-import com.epam.kinorating.service.utils.PaginationHelper;
-import org.apache.commons.validator.routines.IntegerValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public class ShowAllFilmsCommand implements Command {
     public static final String NAME = "show_all";
 
     private static final int ELEMENTS_ON_PAGE = 5;
-    private static final int DEFAULT_PAGE = 1;
 
     private static final String PANEL_PAGE = "/WEB-INF/panel.jsp";
     private static final String FILMS_ATTRIBUTE = "films";
-    private static final String PAGES_ATTRIBUTE = "pages";
-    private static final String CURRENT_PAGE_ATTRIBUTE = "current_page";
-    private final FilmService filmService;
-    private final IntegerValidator integerValidator;
-    private final PaginationHelper paginationHelper;
+    private final PageableContentCommandHelper<Film> pageableContentCommandHelper;
 
-    public ShowAllFilmsCommand(FilmService filmService, IntegerValidator integerValidator, PaginationHelper paginationHelper) {
-        this.filmService = filmService;
-        this.integerValidator = integerValidator;
-        this.paginationHelper = paginationHelper;
+    public ShowAllFilmsCommand(PageableContentCommandHelper<Film> pageableContentCommandHelper) {
+        this.pageableContentCommandHelper = pageableContentCommandHelper;
     }
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        int pages = filmService.countPages(ELEMENTS_ON_PAGE);
-        request.setAttribute(PAGES_ATTRIBUTE, pages);
-        String currentPageString = request.getParameter(CURRENT_PAGE_ATTRIBUTE);
-        Integer currentPage = integerValidator.validate(currentPageString);
-
-        if (currentPage == null || !paginationHelper.isValidPageNumber(pages, currentPage)) {
-            currentPage = DEFAULT_PAGE;
-        }
-        request.setAttribute(CURRENT_PAGE_ATTRIBUTE, currentPage);
-
-        List<Film> films = filmService.findAllOnPage(currentPage, ELEMENTS_ON_PAGE);
-        request.setAttribute(FILMS_ATTRIBUTE, films);
+        int pages = pageableContentCommandHelper.countAndSetPagesAttribute(request, ELEMENTS_ON_PAGE);
+        int currentPage = pageableContentCommandHelper.parseAndSetCurrentPage(request, pages);
+        pageableContentCommandHelper.findAndSetElementsOnPage(request, currentPage, ELEMENTS_ON_PAGE, FILMS_ATTRIBUTE);
 
         return new CommandResult(PANEL_PAGE, true);
     }

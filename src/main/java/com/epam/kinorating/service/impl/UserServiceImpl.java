@@ -4,9 +4,8 @@ import com.epam.kinorating.entity.Status;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.database.dao.UserDao;
-import com.epam.kinorating.entity.Role;
 import com.epam.kinorating.entity.User;
-import com.epam.kinorating.service.Service;
+import com.epam.kinorating.service.Pageable;
 import com.epam.kinorating.service.UserService;
 
 import java.util.List;
@@ -14,9 +13,21 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+    private final Pageable<User> pageableLogic;
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, Pageable<User> pageableLogic) {
         this.userDao = userDao;
+        this.pageableLogic = pageableLogic;
+    }
+
+    @Override
+    public List<User> findAllOnPage(int currentPage, int itemsOnPage) throws ServiceException {
+        return pageableLogic.findAllOnPage(currentPage, itemsOnPage);
+    }
+
+    @Override
+    public int countPages(int elementsOnPage) throws ServiceException {
+        return pageableLogic.countPages(elementsOnPage);
     }
 
     @Override
@@ -57,12 +68,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> login(String login, String password) throws ServiceException {
-        Optional<User> user;
         try {
-            user = userDao.findUserByLoginAndPassword(login, password);
+            return userDao.findUserByLoginAndPassword(login, password);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-        return user;
     }
 }

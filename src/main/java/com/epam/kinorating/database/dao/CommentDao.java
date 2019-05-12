@@ -1,5 +1,6 @@
 package com.epam.kinorating.database.dao;
 
+import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.database.ProxyConnection;
 import com.epam.kinorating.entity.Comment;
@@ -30,6 +31,12 @@ public class CommentDao extends AbstractDao<Comment> {
     }
 
     @Override
+    public List<Comment> findAllWithLimitAndOffset(int limit, int offset) throws DaoException {
+        String query = addLimitAndOffsetToQuery(FIND_ALL_QUERY);
+        return executeQuery(query, limit, offset);
+    }
+
+    @Override
     public List<Comment> findAll() throws DaoException {
         return executeQuery(FIND_ALL_QUERY);
     }
@@ -37,6 +44,11 @@ public class CommentDao extends AbstractDao<Comment> {
     @Override
     public Optional<Comment> findById(Integer id) throws DaoException {
         return executeQueryForSingleResult(FIND_BY_ID_QUERY, id);
+    }
+
+    @Override
+    public int getEntriesCount() throws DaoException {
+        return getEntriesCount(Comment.NAME);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.epam.kinorating.entity.Comment;
 import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.service.CommentService;
 import com.epam.kinorating.service.FilmService;
+import com.epam.kinorating.service.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,37 +17,28 @@ public class FilmServiceImpl implements FilmService {
 
     private final FilmDao filmDao;
     private final CommentService commentService;
+    private final Pageable<Film> pageableLogic;
 
-    public FilmServiceImpl(FilmDao filmDao, CommentService commentService) {
+    public FilmServiceImpl(FilmDao filmDao, CommentService commentService, Pageable<Film> pageableLogic) {
         this.filmDao = filmDao;
         this.commentService = commentService;
+        this.pageableLogic = pageableLogic;
+    }
+
+    @Override
+    public int countPages(int elementsOnPage) throws ServiceException {
+        return pageableLogic.countPages(elementsOnPage);
+    }
+
+    @Override
+    public List<Film> findAllOnPage(int currentPage, int itemsOnPage) throws ServiceException {
+        return pageableLogic.findAllOnPage(currentPage, itemsOnPage);
     }
 
     @Override
     public List<Film> findAll() throws ServiceException {
         try {
             return filmDao.findAll();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<Film> findAllOnPage(int currentPage, int itemsOnPage) throws ServiceException {
-        int offset = (currentPage - 1) * itemsOnPage;
-        try {
-            return filmDao.findAllWithLimit(itemsOnPage, offset);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public int countPages(int elementsOnPage) throws ServiceException {
-        try {
-            int filmCount = filmDao.getFilmCount();
-            double pages = (double) filmCount / (double) elementsOnPage;
-            return (int) Math.ceil(pages);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

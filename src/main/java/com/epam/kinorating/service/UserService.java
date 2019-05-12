@@ -7,7 +7,7 @@ import com.epam.kinorating.exception.ServiceException;
 
 import java.util.Optional;
 
-public interface UserService extends Service<User> {
+public interface UserService extends Service<User>, Pageable<User> {
     Optional<User> findById(Integer id) throws ServiceException;
 
     void updateStatus(Integer id, Status status) throws ServiceException;

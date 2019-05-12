@@ -4,14 +4,11 @@ import com.epam.kinorating.database.dao.CommentDao;
 import com.epam.kinorating.database.dao.FilmDao;
 import com.epam.kinorating.database.dao.MarkDao;
 import com.epam.kinorating.database.dao.UserDao;
-import com.epam.kinorating.service.UserService;
-import com.epam.kinorating.service.CommentService;
-import com.epam.kinorating.service.FilmService;
-import com.epam.kinorating.service.MarkService;
-import com.epam.kinorating.service.impl.CommentServiceImpl;
-import com.epam.kinorating.service.impl.FilmServiceImpl;
-import com.epam.kinorating.service.impl.MarkServiceImpl;
-import com.epam.kinorating.service.impl.UserServiceImpl;
+import com.epam.kinorating.entity.Film;
+import com.epam.kinorating.entity.User;
+import com.epam.kinorating.service.*;
+import com.epam.kinorating.service.impl.*;
+import com.epam.kinorating.service.utils.PageableLogic;
 
 public class ServiceFactory {
     private final DaoFactory daoFactory;
@@ -22,7 +19,8 @@ public class ServiceFactory {
 
     public UserService createUserService() {
         UserDao userDao = daoFactory.createUserDao();
-        return new UserServiceImpl(userDao);
+        Pageable<User> pageable = new PageableLogic<>(userDao);
+        return new UserServiceImpl(userDao, pageable);
     }
 
     public CommentService createCommentService() {
@@ -38,7 +36,8 @@ public class ServiceFactory {
     public FilmService createFilmService() {
         FilmDao filmDao = daoFactory.createFilmDao();
         CommentService commentService = createCommentService();
-        return new FilmServiceImpl(filmDao, commentService);
+        Pageable<Film> pageable = new PageableLogic<>(filmDao);
+        return new FilmServiceImpl(filmDao, commentService, pageable);
     }
 
 }

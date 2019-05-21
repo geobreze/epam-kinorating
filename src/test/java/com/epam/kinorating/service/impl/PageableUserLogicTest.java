@@ -5,6 +5,8 @@ import com.epam.kinorating.entity.Entity;
 import com.epam.kinorating.entity.Mark;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.exception.ServiceException;
+import com.epam.kinorating.service.impl.AbstractPageableService;
+import com.epam.kinorating.service.impl.FilmServiceImpl;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -31,7 +33,7 @@ public class PageableLogicTest {
     public void countPagesShouldReturnOneWhenLackOfItems(int elementsCount, int elementsOnPage, int expected) throws DaoException, ServiceException {
         Dao<Entity> dao = mock(Dao.class);
         when(dao.getEntriesCount()).thenReturn(elementsCount);
-        PageableLogic<Entity> pageableLogic = new PageableLogic<>(dao);
+        AbstractPageableService<Film> pageableLogic = new FilmServiceImpl<>(dao);
 
         int result = pageableLogic.countPages(elementsOnPage);
 

@@ -47,7 +47,8 @@ public class CommandFactory {
             }
             case ShowAllFilmsCommand.NAME: {
                 FilmService filmService = serviceFactory.createFilmService();
-                PageableContentCommandHelper<Film> pageableContentCommandHelper = new PageableContentCommandHelper<>(filmService, paginationHelper);
+                PageableContentCommandHelper<Film> pageableContentCommandHelper
+                        = new PageableContentCommandHelper<>(filmService, paginationHelper);
                 commandObject = new ShowAllFilmsCommand(pageableContentCommandHelper);
                 break;
             }

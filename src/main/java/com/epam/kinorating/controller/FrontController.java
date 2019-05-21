@@ -8,7 +8,6 @@ import com.epam.kinorating.database.ConnectionPool;
 import com.epam.kinorating.database.ProxyConnection;
 import com.epam.kinorating.database.utils.SHA256Hasher;
 import com.epam.kinorating.service.utils.PaginationHelper;
-import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +20,7 @@ import java.io.IOException;
 
 public class FrontController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(FrontController.class);
-    private static final String DATABASE_CONFIG = "database";
+    private static final String DATABASE_CONFIG = "database.properties";
     private static final int NOT_FOUND_ERROR = 404;
     private static final int SERVER_ERROR = 500;
 
@@ -83,10 +82,6 @@ public class FrontController extends HttpServlet {
 
     @Override
     public void destroy() {
-        try {
-            ConnectionPool.getInstance().close();
-        } catch (Exception e) {
-            LOGGER.error(e);
-        }
+        ConnectionPool.getInstance().closeAll();
     }
 }

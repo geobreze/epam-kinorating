@@ -8,7 +8,6 @@ import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.entity.User;
 import com.epam.kinorating.service.*;
 import com.epam.kinorating.service.impl.*;
-import com.epam.kinorating.service.utils.PageableLogic;
 
 public class ServiceFactory {
     private final DaoFactory daoFactory;
@@ -19,8 +18,7 @@ public class ServiceFactory {
 
     public UserService createUserService() {
         UserDao userDao = daoFactory.createUserDao();
-        Pageable<User> pageable = new PageableLogic<>(userDao);
-        return new UserServiceImpl(userDao, pageable);
+        return new UserServiceImpl(userDao);
     }
 
     public CommentService createCommentService() {
@@ -36,8 +34,7 @@ public class ServiceFactory {
     public FilmService createFilmService() {
         FilmDao filmDao = daoFactory.createFilmDao();
         CommentService commentService = createCommentService();
-        Pageable<Film> pageable = new PageableLogic<>(filmDao);
-        return new FilmServiceImpl(filmDao, commentService, pageable);
+        return new FilmServiceImpl(filmDao, commentService);
     }
 
 }

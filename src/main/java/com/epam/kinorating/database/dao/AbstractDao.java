@@ -40,6 +40,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
             return statement.executeUpdate();
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DaoException(e);
         }
     }
@@ -57,6 +58,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
                 }
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DaoException(e);
         }
         return resultList;
@@ -70,6 +72,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
                 return resultSet.getInt(ROW_COUNT);
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DaoException(e);
         }
     }

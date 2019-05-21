@@ -12,27 +12,16 @@ import com.epam.kinorating.service.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-public class FilmServiceImpl implements FilmService {
+public class FilmServiceImpl extends AbstractPageableService<Film> implements FilmService {
     private static final int MAX_TITLE_LENGTH = 255;
 
     private final FilmDao filmDao;
     private final CommentService commentService;
-    private final Pageable<Film> pageableLogic;
 
-    public FilmServiceImpl(FilmDao filmDao, CommentService commentService, Pageable<Film> pageableLogic) {
+    public FilmServiceImpl(FilmDao filmDao, CommentService commentService) {
+        super(filmDao);
         this.filmDao = filmDao;
         this.commentService = commentService;
-        this.pageableLogic = pageableLogic;
-    }
-
-    @Override
-    public int countPages(int elementsOnPage) throws ServiceException {
-        return pageableLogic.countPages(elementsOnPage);
-    }
-
-    @Override
-    public List<Film> findAllOnPage(int currentPage, int itemsOnPage) throws ServiceException {
-        return pageableLogic.findAllOnPage(currentPage, itemsOnPage);
     }
 
     @Override

@@ -1,10 +1,11 @@
-package com.epam.kinorating.service.utils;
+package com.epam.kinorating.service.impl;
 
 import com.epam.kinorating.database.dao.Dao;
-import com.epam.kinorating.entity.Entity;
-import com.epam.kinorating.entity.Mark;
+import com.epam.kinorating.database.dao.UserDao;
+import com.epam.kinorating.entity.*;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.exception.ServiceException;
+import com.epam.kinorating.service.Pageable;
 import com.epam.kinorating.service.impl.AbstractPageableService;
 import com.epam.kinorating.service.impl.FilmServiceImpl;
 import org.testng.annotations.DataProvider;
@@ -16,7 +17,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 
-public class PageableLogicTest {
+public class PageableUserLogicTest {
     private static final int DEFAULT_CURRENT_PAGE = 1;
     private static final int DEFAULT_ELEMENTS_ON_PAGE = 5;
 
@@ -31,9 +32,9 @@ public class PageableLogicTest {
 
     @Test(dataProvider = "pagesCountDataProvider")
     public void countPagesShouldReturnOneWhenLackOfItems(int elementsCount, int elementsOnPage, int expected) throws DaoException, ServiceException {
-        Dao<Entity> dao = mock(Dao.class);
+        UserDao dao = mock(UserDao.class);
         when(dao.getEntriesCount()).thenReturn(elementsCount);
-        AbstractPageableService<Film> pageableLogic = new FilmServiceImpl<>(dao);
+        Pageable<User> pageableLogic = new UserServiceImpl(dao);
 
         int result = pageableLogic.countPages(elementsOnPage);
 
@@ -45,9 +46,9 @@ public class PageableLogicTest {
 
     @Test(expectedExceptions = ServiceException.class)
     public void countPagesShouldThrowServiceExceptionWhenDatabaseIsNotAvailable() throws DaoException, ServiceException {
-        Dao<Entity> dao = mock(Dao.class);
+        UserDao dao = mock(UserDao.class);
         when(dao.getEntriesCount()).thenThrow(DaoException.class);
-        PageableLogic<Entity> pageableLogic = new PageableLogic<>(dao);
+        Pageable<User> pageableLogic = new UserServiceImpl(dao);
 
         pageableLogic.countPages(DEFAULT_ELEMENTS_ON_PAGE);
 
@@ -57,9 +58,9 @@ public class PageableLogicTest {
 
     @Test(expectedExceptions = ServiceException.class)
     public void findAllOnPageShouldThrowServiceExceptionWhenDatabaseIsNotAvailable() throws DaoException, ServiceException {
-        Dao<Entity> dao = mock(Dao.class);
+        UserDao dao = mock(UserDao.class);
         when(dao.findAllWithLimitAndOffset(anyInt(), anyInt())).thenThrow(DaoException.class);
-        PageableLogic<Entity> pageableLogic = new PageableLogic<>(dao);
+        Pageable<User> pageableLogic = new UserServiceImpl(dao);
 
         pageableLogic.findAllOnPage(DEFAULT_CURRENT_PAGE, DEFAULT_ELEMENTS_ON_PAGE);
 
@@ -69,43 +70,45 @@ public class PageableLogicTest {
 
     @Test
     public void findAllOnPageShouldReturnFirstFiveElementsWhenFirstPageSupplied() throws DaoException, ServiceException {
-        Dao<Entity> dao = mock(Dao.class);
+        UserDao dao = mock(UserDao.class);
 
-        List<Entity> testMarks = Arrays.asList(
-                new Mark(1, 1, 1, 1),
-                new Mark(2, 1, 2, 1),
-                new Mark(3, 1, 3, 1),
-                new Mark(4, 1, 4, 1),
-                new Mark(5, 1, 5, 1)
+        List<User> testUsers = Arrays.asList(
+                new User(1, "1", "1", Role.ADMIN, true, Status.REGULAR),
+                new User(2, "2", "1", Role.USER, false, Status.GOLD),
+                new User(3, "3", "1", Role.ADMIN, false, Status.REGULAR),
+                new User(4, "4", "1", Role.USER, true, Status.VIP),
+                new User(5, "5", "1", Role.ADMIN, false, Status.REGULAR),
+                new User(6, "6", "1", Role.USER, false, Status.REGULAR)
         );
 
-        when(dao.findAllWithLimitAndOffset(DEFAULT_ELEMENTS_ON_PAGE, 0)).thenReturn(testMarks);
-        PageableLogic<Entity> pageableLogic = new PageableLogic<>(dao);
+        when(dao.findAllWithLimitAndOffset(DEFAULT_ELEMENTS_ON_PAGE, 0)).thenReturn(testUsers);
+        Pageable<User> pageableLogic = new UserServiceImpl(dao);
 
-        List<Entity> result = pageableLogic.findAllOnPage(DEFAULT_CURRENT_PAGE, DEFAULT_ELEMENTS_ON_PAGE);
+        List<User> result = pageableLogic.findAllOnPage(DEFAULT_CURRENT_PAGE, DEFAULT_ELEMENTS_ON_PAGE);
 
-        assertEquals(result, testMarks);
+        assertEquals(result, testUsers);
         verify(dao).findAllWithLimitAndOffset(DEFAULT_ELEMENTS_ON_PAGE, 0);
         verifyNoMoreInteractions(dao);
     }
 
     @Test
     public void findAllOnPageShouldReturnLessThenFiveElementsWhenNotFullPageSupplied() throws DaoException, ServiceException {
-        Dao<Entity> dao = mock(Dao.class);
+        UserDao dao = mock(UserDao.class);
 
-        List<Entity> testMarks = Arrays.asList(
-                new Mark(1, 1, 1, 1),
-                new Mark(2, 1, 2, 1)
+        List<User> testUsers = Arrays.asList(
+                new User(1, "1", "1", Role.ADMIN, true, Status.REGULAR),
+                new User(2, "2", "1", Role.USER, false, Status.GOLD),
+                new User(3, "3", "1", Role.ADMIN, false, Status.REGULAR)
         );
 
         int offset = 20;
-        when(dao.findAllWithLimitAndOffset(DEFAULT_ELEMENTS_ON_PAGE, offset)).thenReturn(testMarks);
-        PageableLogic<Entity> pageableLogic = new PageableLogic<>(dao);
+        when(dao.findAllWithLimitAndOffset(DEFAULT_ELEMENTS_ON_PAGE, offset)).thenReturn(testUsers);
+        Pageable<User> pageableLogic = new UserServiceImpl(dao);
 
         int page = 5;
-        List<Entity> result = pageableLogic.findAllOnPage(page, DEFAULT_ELEMENTS_ON_PAGE);
+        List<User> result = pageableLogic.findAllOnPage(page, DEFAULT_ELEMENTS_ON_PAGE);
 
-        assertEquals(result, testMarks);
+        assertEquals(result, testUsers);
         verify(dao).findAllWithLimitAndOffset(DEFAULT_ELEMENTS_ON_PAGE, offset);
         verifyNoMoreInteractions(dao);
     }

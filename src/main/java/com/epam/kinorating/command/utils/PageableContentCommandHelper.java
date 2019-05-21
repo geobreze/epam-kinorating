@@ -34,7 +34,8 @@ public class PageableContentCommandHelper<T extends Entity> {
         return currentPage;
     }
 
-    public void findAndSetElementsOnPage(HttpServletRequest request, int currentPage, int elementsOnPage, String attributeName) throws ServiceException {
+    public void findAndSetElementsOnPage(HttpServletRequest request, int currentPage, int elementsOnPage, String attributeName)
+            throws ServiceException {
         List<T> users = pageable.findAllOnPage(currentPage, elementsOnPage);
         request.setAttribute(attributeName, users);
     }

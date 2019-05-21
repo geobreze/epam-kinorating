@@ -15,10 +15,8 @@ public class FilmServiceImplTest {
 
     private static final FilmDao EMPTY_FILM_DAO_MOCK = mock(FilmDao.class);
     private static final CommentService EMPTY_COMMENT_SERVICE_MOCK = mock(CommentService.class);
-    private static final Pageable<Film> EMPTY_PAGEABLE_MOCK = mock(Pageable.class);
     private final FilmService filmServiceWithEmptyMocks = new FilmServiceImpl(EMPTY_FILM_DAO_MOCK,
-            EMPTY_COMMENT_SERVICE_MOCK,
-            EMPTY_PAGEABLE_MOCK);
+            EMPTY_COMMENT_SERVICE_MOCK);
     private static final Film CORRECT_FILM = new Film(
             1,
             "Title",
@@ -49,26 +47,26 @@ public class FilmServiceImplTest {
     public void saveShouldSaveCorrectFilm() throws ServiceException, DaoException {
         filmServiceWithEmptyMocks.save(CORRECT_FILM);
         verify(EMPTY_FILM_DAO_MOCK).save(CORRECT_FILM);
-        verifyNoMoreInteractions(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK, EMPTY_PAGEABLE_MOCK);
-        clearInvocations(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK, EMPTY_PAGEABLE_MOCK);
+        verifyNoMoreInteractions(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK);
+        clearInvocations(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK);
     }
 
     @Test(expectedExceptions = ServiceException.class)
     public void saveShouldThrowServiceExceptionWhenFilmWithEmptyTitleSupplied() throws ServiceException {
         filmServiceWithEmptyMocks.save(EMPTY_TITLE_FILM);
-        verifyNoMoreInteractions(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK, EMPTY_PAGEABLE_MOCK);
+        verifyNoMoreInteractions(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK);
     }
 
     @Test(expectedExceptions = ServiceException.class)
     public void saveShouldThrowServiceExceptionWhenFilmWithEmptyDescriptionSupplied() throws ServiceException {
         filmServiceWithEmptyMocks.save(EMPTY_DESCRIPTION_FILM);
-        verifyNoMoreInteractions(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK, EMPTY_PAGEABLE_MOCK);
+        verifyNoMoreInteractions(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK);
     }
 
     @Test(expectedExceptions = ServiceException.class)
     public void saveShouldThrowServiceExceptionWhenFilmWithLongTitleSupplied() throws ServiceException {
         filmServiceWithEmptyMocks.save(LONG_TITLE_FILM);
-        verifyNoMoreInteractions(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK, EMPTY_PAGEABLE_MOCK);
+        verifyNoMoreInteractions(EMPTY_FILM_DAO_MOCK, EMPTY_COMMENT_SERVICE_MOCK);
     }
 
 }

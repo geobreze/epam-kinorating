@@ -11,23 +11,12 @@ import com.epam.kinorating.service.UserService;
 import java.util.List;
 import java.util.Optional;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractPageableService<User> implements UserService {
     private final UserDao userDao;
-    private final Pageable<User> pageableLogic;
 
-    public UserServiceImpl(UserDao userDao, Pageable<User> pageableLogic) {
+    public UserServiceImpl(UserDao userDao) {
+        super(userDao);
         this.userDao = userDao;
-        this.pageableLogic = pageableLogic;
-    }
-
-    @Override
-    public List<User> findAllOnPage(int currentPage, int itemsOnPage) throws ServiceException {
-        return pageableLogic.findAllOnPage(currentPage, itemsOnPage);
-    }
-
-    @Override
-    public int countPages(int elementsOnPage) throws ServiceException {
-        return pageableLogic.countPages(elementsOnPage);
     }
 
     @Override

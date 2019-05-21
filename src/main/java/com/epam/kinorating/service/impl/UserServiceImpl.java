@@ -1,11 +1,10 @@
 package com.epam.kinorating.service.impl;
 
+import com.epam.kinorating.database.dao.UserDao;
 import com.epam.kinorating.entity.Status;
+import com.epam.kinorating.entity.User;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.exception.ServiceException;
-import com.epam.kinorating.database.dao.UserDao;
-import com.epam.kinorating.entity.User;
-import com.epam.kinorating.service.Pageable;
 import com.epam.kinorating.service.UserService;
 
 import java.util.List;

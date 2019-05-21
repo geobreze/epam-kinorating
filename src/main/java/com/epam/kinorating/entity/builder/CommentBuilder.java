@@ -1,7 +1,7 @@
 package com.epam.kinorating.entity.builder;
 
-import com.epam.kinorating.entity.User;
 import com.epam.kinorating.entity.Comment;
+import com.epam.kinorating.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

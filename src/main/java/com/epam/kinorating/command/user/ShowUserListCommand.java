@@ -4,8 +4,8 @@ import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.command.utils.PageableContentCommandHelper;
 import com.epam.kinorating.entity.Status;
-import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.entity.User;
+import com.epam.kinorating.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

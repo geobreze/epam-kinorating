@@ -1,9 +1,9 @@
 package com.epam.kinorating.database.dao;
 
-import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.database.ProxyConnection;
 import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.entity.builder.Builder;
+import com.epam.kinorating.exception.DaoException;
 
 import java.util.List;
 import java.util.Optional;

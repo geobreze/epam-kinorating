@@ -2,11 +2,11 @@ package com.epam.kinorating.command.film;
 
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
-import com.epam.kinorating.exception.NotFoundException;
-import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.entity.Mark;
 import com.epam.kinorating.entity.User;
+import com.epam.kinorating.exception.NotFoundException;
+import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.service.FilmService;
 import com.epam.kinorating.service.MarkService;
 

@@ -2,11 +2,11 @@ package com.epam.kinorating.controller;
 
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
-import com.epam.kinorating.exception.NotFoundException;
-import com.epam.kinorating.factory.*;
 import com.epam.kinorating.database.ConnectionPool;
 import com.epam.kinorating.database.ProxyConnection;
 import com.epam.kinorating.database.utils.SHA256Hasher;
+import com.epam.kinorating.exception.NotFoundException;
+import com.epam.kinorating.factory.*;
 import com.epam.kinorating.service.utils.PaginationHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

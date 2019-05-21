@@ -2,8 +2,8 @@ package com.epam.kinorating.command.mark;
 
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
-import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.entity.User;
+import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.service.MarkService;
 
 import javax.servlet.http.HttpServletRequest;

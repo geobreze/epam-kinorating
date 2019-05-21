@@ -5,12 +5,12 @@ import com.epam.kinorating.exception.ConnectionFactoryException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class ConnectionFactory {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionFactory.class);
@@ -24,7 +24,7 @@ public class ConnectionFactory {
     public ConnectionFactory(String config) {
         Properties properties = new Properties();
         ClassLoader classLoader = ConnectionFactory.class.getClassLoader();
-        try(InputStream inputStream = classLoader.getResourceAsStream(config)) {
+        try (InputStream inputStream = classLoader.getResourceAsStream(config)) {
             properties.load(inputStream);
         } catch (IOException e) {
             LOGGER.error(e);

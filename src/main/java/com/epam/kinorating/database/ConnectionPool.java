@@ -55,7 +55,7 @@ public class ConnectionPool {
     }
 
     public void closeAll() {
-        for (ProxyConnection connection : connections){
+        for (ProxyConnection connection : connections) {
             try {
                 connection.close();
             } catch (SQLException e) {

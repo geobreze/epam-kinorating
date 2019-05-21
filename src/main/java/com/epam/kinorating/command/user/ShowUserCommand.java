@@ -2,10 +2,10 @@ package com.epam.kinorating.command.user;
 
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
-import com.epam.kinorating.exception.NotFoundException;
-import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.entity.Role;
 import com.epam.kinorating.entity.User;
+import com.epam.kinorating.exception.NotFoundException;
+import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;

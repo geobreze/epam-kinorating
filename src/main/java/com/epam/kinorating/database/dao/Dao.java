@@ -1,7 +1,7 @@
 package com.epam.kinorating.database.dao;
 
-import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.entity.Entity;
+import com.epam.kinorating.exception.DaoException;
 
 import java.util.List;
 import java.util.Optional;

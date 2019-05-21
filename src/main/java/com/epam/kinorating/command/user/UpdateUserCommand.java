@@ -31,10 +31,10 @@ public class UpdateUserCommand implements Command {
 
         Map<String, String[]> parameterMap = request.getParameterMap();
 
-        if(parameterMap.containsKey(STATUS_PARAMETER)) {
+        if (parameterMap.containsKey(STATUS_PARAMETER)) {
             getStatusFromRequestAndUpdate(id, request);
         }
-        if(parameterMap.containsKey(BAN_PARAMETER)) {
+        if (parameterMap.containsKey(BAN_PARAMETER)) {
             getBanFromRequestAndUpdate(id, request);
         }
 

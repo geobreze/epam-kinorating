@@ -1,13 +1,12 @@
 package com.epam.kinorating.service.impl;
 
-import com.epam.kinorating.exception.DaoException;
-import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.database.dao.FilmDao;
 import com.epam.kinorating.entity.Comment;
 import com.epam.kinorating.entity.Film;
+import com.epam.kinorating.exception.DaoException;
+import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.service.CommentService;
 import com.epam.kinorating.service.FilmService;
-import com.epam.kinorating.service.Pageable;
 
 import java.util.List;
 import java.util.Optional;

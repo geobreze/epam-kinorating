@@ -1,12 +1,10 @@
 package com.epam.kinorating.service.impl;
 
-import com.epam.kinorating.entity.Comment;
-import com.epam.kinorating.exception.DaoException;
-import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.database.dao.MarkDao;
 import com.epam.kinorating.entity.Mark;
+import com.epam.kinorating.exception.DaoException;
+import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.service.MarkService;
-import com.epam.kinorating.service.Service;
 
 import java.util.List;
 import java.util.Optional;

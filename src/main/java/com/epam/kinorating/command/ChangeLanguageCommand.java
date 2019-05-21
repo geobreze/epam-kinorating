@@ -1,7 +1,7 @@
 package com.epam.kinorating.command;
 
-import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.entity.Language;
+import com.epam.kinorating.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

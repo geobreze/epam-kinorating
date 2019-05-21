@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface Pageable<T extends Entity> {
     List<T> findAllOnPage(int currentPage, int itemsOnPage) throws ServiceException;
+
     int countPages(int elementsOnPage) throws ServiceException;
 }

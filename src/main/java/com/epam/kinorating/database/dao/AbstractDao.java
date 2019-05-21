@@ -1,9 +1,9 @@
 package com.epam.kinorating.database.dao;
 
-import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.database.ProxyConnection;
 import com.epam.kinorating.entity.Entity;
 import com.epam.kinorating.entity.builder.Builder;
+import com.epam.kinorating.exception.DaoException;
 import com.sun.javafx.binding.StringFormatter;
 import javafx.beans.binding.StringExpression;
 import org.apache.logging.log4j.LogManager;

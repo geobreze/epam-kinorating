@@ -3,8 +3,8 @@ package com.epam.kinorating.command.film;
 import com.epam.kinorating.command.Command;
 import com.epam.kinorating.command.CommandResult;
 import com.epam.kinorating.command.utils.PageableContentCommandHelper;
-import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.entity.Film;
+import com.epam.kinorating.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

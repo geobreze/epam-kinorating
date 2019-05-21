@@ -1,13 +1,11 @@
 package com.epam.kinorating.database.dao;
 
-import com.epam.kinorating.entity.Film;
-import com.epam.kinorating.entity.Status;
-import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.database.ProxyConnection;
 import com.epam.kinorating.database.utils.Hasher;
-import com.epam.kinorating.entity.Role;
+import com.epam.kinorating.entity.Status;
 import com.epam.kinorating.entity.User;
 import com.epam.kinorating.entity.builder.Builder;
+import com.epam.kinorating.exception.DaoException;
 
 import java.util.List;
 import java.util.Optional;

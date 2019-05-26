@@ -5,6 +5,10 @@ import com.epam.kinorating.database.dao.CommentDao;
 import com.epam.kinorating.database.dao.FilmDao;
 import com.epam.kinorating.database.dao.MarkDao;
 import com.epam.kinorating.database.dao.UserDao;
+import com.epam.kinorating.database.impl.CommentDaoImpl;
+import com.epam.kinorating.database.impl.FilmDaoImpl;
+import com.epam.kinorating.database.impl.MarkDaoImpl;
+import com.epam.kinorating.database.impl.UserDaoImpl;
 import com.epam.kinorating.database.utils.Hasher;
 import com.epam.kinorating.entity.Comment;
 import com.epam.kinorating.entity.Film;
@@ -25,22 +29,22 @@ public class DaoFactory {
 
     public UserDao createUserDao() {
         Builder<User> userBuilder = builderFactory.createUserBuilder();
-        return new UserDao(connection, userBuilder, hasher);
+        return new UserDaoImpl(connection, userBuilder, hasher);
     }
 
     public CommentDao createCommentDao() {
         Builder<Comment> commentBuilder = builderFactory.createCommentBuilder();
-        return new CommentDao(connection, commentBuilder);
+        return new CommentDaoImpl(connection, commentBuilder);
     }
 
     public MarkDao createMarkDao() {
         Builder<Mark> markBuilder = builderFactory.createMarkBuilder();
-        return new MarkDao(connection, markBuilder);
+        return new MarkDaoImpl(connection, markBuilder);
     }
 
     public FilmDao createFilmDao() {
         Builder<Film> filmBuilder = builderFactory.createFilmBuilder();
-        return new FilmDao(connection, filmBuilder);
+        return new FilmDaoImpl(connection, filmBuilder);
     }
 
 }

@@ -1,13 +1,10 @@
 package com.epam.kinorating.service.impl;
 
-import com.epam.kinorating.database.dao.Dao;
-import com.epam.kinorating.database.dao.UserDao;
+import com.epam.kinorating.database.impl.UserDaoImpl;
 import com.epam.kinorating.entity.*;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.service.Pageable;
-import com.epam.kinorating.service.impl.AbstractPageableService;
-import com.epam.kinorating.service.impl.FilmServiceImpl;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -32,7 +29,7 @@ public class PageableUserLogicTest {
 
     @Test(dataProvider = "pagesCountDataProvider")
     public void countPagesShouldReturnOneWhenLackOfItems(int elementsCount, int elementsOnPage, int expected) throws DaoException, ServiceException {
-        UserDao dao = mock(UserDao.class);
+        UserDaoImpl dao = mock(UserDaoImpl.class);
         when(dao.getEntriesCount()).thenReturn(elementsCount);
         Pageable<User> pageableLogic = new UserServiceImpl(dao);
 
@@ -46,7 +43,7 @@ public class PageableUserLogicTest {
 
     @Test(expectedExceptions = ServiceException.class)
     public void countPagesShouldThrowServiceExceptionWhenDatabaseIsNotAvailable() throws DaoException, ServiceException {
-        UserDao dao = mock(UserDao.class);
+        UserDaoImpl dao = mock(UserDaoImpl.class);
         when(dao.getEntriesCount()).thenThrow(DaoException.class);
         Pageable<User> pageableLogic = new UserServiceImpl(dao);
 
@@ -58,7 +55,7 @@ public class PageableUserLogicTest {
 
     @Test(expectedExceptions = ServiceException.class)
     public void findAllOnPageShouldThrowServiceExceptionWhenDatabaseIsNotAvailable() throws DaoException, ServiceException {
-        UserDao dao = mock(UserDao.class);
+        UserDaoImpl dao = mock(UserDaoImpl.class);
         when(dao.findAllWithLimitAndOffset(anyInt(), anyInt())).thenThrow(DaoException.class);
         Pageable<User> pageableLogic = new UserServiceImpl(dao);
 
@@ -70,7 +67,7 @@ public class PageableUserLogicTest {
 
     @Test
     public void findAllOnPageShouldReturnFirstFiveElementsWhenFirstPageSupplied() throws DaoException, ServiceException {
-        UserDao dao = mock(UserDao.class);
+        UserDaoImpl dao = mock(UserDaoImpl.class);
 
         List<User> testUsers = Arrays.asList(
                 new User(1, "1", "1", Role.ADMIN, true, Status.REGULAR),
@@ -93,7 +90,7 @@ public class PageableUserLogicTest {
 
     @Test
     public void findAllOnPageShouldReturnLessThenFiveElementsWhenNotFullPageSupplied() throws DaoException, ServiceException {
-        UserDao dao = mock(UserDao.class);
+        UserDaoImpl dao = mock(UserDaoImpl.class);
 
         List<User> testUsers = Arrays.asList(
                 new User(1, "1", "1", Role.ADMIN, true, Status.REGULAR),

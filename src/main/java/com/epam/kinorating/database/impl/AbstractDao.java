@@ -1,6 +1,7 @@
-package com.epam.kinorating.database.dao;
+package com.epam.kinorating.database.impl;
 
 import com.epam.kinorating.database.ProxyConnection;
+import com.epam.kinorating.database.dao.Dao;
 import com.epam.kinorating.entity.Entity;
 import com.epam.kinorating.entity.builder.Builder;
 import com.epam.kinorating.exception.DaoException;

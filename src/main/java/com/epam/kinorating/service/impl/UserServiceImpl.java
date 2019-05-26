@@ -1,6 +1,7 @@
 package com.epam.kinorating.service.impl;
 
 import com.epam.kinorating.database.dao.UserDao;
+import com.epam.kinorating.database.impl.UserDaoImpl;
 import com.epam.kinorating.entity.Status;
 import com.epam.kinorating.entity.User;
 import com.epam.kinorating.exception.DaoException;

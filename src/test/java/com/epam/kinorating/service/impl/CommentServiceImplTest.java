@@ -1,6 +1,6 @@
 package com.epam.kinorating.service.impl;
 
-import com.epam.kinorating.database.dao.CommentDao;
+import com.epam.kinorating.database.impl.CommentDaoImpl;
 import com.epam.kinorating.entity.Comment;
 import com.epam.kinorating.entity.User;
 import com.epam.kinorating.exception.DaoException;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 
 public class CommentServiceImplTest {
 
-    private static final CommentDao EMPTY_COMMENT_DAO_MOCK = mock(CommentDao.class);
+    private static final CommentDaoImpl EMPTY_COMMENT_DAO_MOCK = mock(CommentDaoImpl.class);
     private static final User user = mock(User.class);
     private static final LocalDateTime date = LocalDateTime.now();
     private final CommentService commentServiceWithEmptyMocks = new CommentServiceImpl(EMPTY_COMMENT_DAO_MOCK);

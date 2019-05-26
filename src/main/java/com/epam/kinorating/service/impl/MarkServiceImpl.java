@@ -1,6 +1,7 @@
 package com.epam.kinorating.service.impl;
 
 import com.epam.kinorating.database.dao.MarkDao;
+import com.epam.kinorating.database.impl.MarkDaoImpl;
 import com.epam.kinorating.entity.Mark;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.exception.ServiceException;

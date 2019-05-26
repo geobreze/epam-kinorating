@@ -1,19 +1,18 @@
 package com.epam.kinorating.service.impl;
 
-import com.epam.kinorating.database.dao.FilmDao;
+import com.epam.kinorating.database.impl.FilmDaoImpl;
 import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.exception.ServiceException;
 import com.epam.kinorating.service.CommentService;
 import com.epam.kinorating.service.FilmService;
-import com.epam.kinorating.service.Pageable;
 import org.testng.annotations.Test;
 
 import static org.mockito.Mockito.*;
 
 public class FilmServiceImplTest {
 
-    private static final FilmDao EMPTY_FILM_DAO_MOCK = mock(FilmDao.class);
+    private static final FilmDaoImpl EMPTY_FILM_DAO_MOCK = mock(FilmDaoImpl.class);
     private static final CommentService EMPTY_COMMENT_SERVICE_MOCK = mock(CommentService.class);
     private final FilmService filmServiceWithEmptyMocks = new FilmServiceImpl(EMPTY_FILM_DAO_MOCK,
             EMPTY_COMMENT_SERVICE_MOCK);

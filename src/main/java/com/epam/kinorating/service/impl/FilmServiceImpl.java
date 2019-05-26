@@ -1,6 +1,7 @@
 package com.epam.kinorating.service.impl;
 
 import com.epam.kinorating.database.dao.FilmDao;
+import com.epam.kinorating.database.impl.FilmDaoImpl;
 import com.epam.kinorating.entity.Comment;
 import com.epam.kinorating.entity.Film;
 import com.epam.kinorating.exception.DaoException;

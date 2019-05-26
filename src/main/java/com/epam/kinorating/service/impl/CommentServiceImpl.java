@@ -1,6 +1,7 @@
 package com.epam.kinorating.service.impl;
 
 import com.epam.kinorating.database.dao.CommentDao;
+import com.epam.kinorating.database.impl.CommentDaoImpl;
 import com.epam.kinorating.entity.Comment;
 import com.epam.kinorating.exception.DaoException;
 import com.epam.kinorating.exception.ServiceException;
